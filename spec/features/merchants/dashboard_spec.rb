@@ -14,7 +14,7 @@ RSpec.describe "merchant dashboard", type: :feature do
     it "when I visit my merchant ddashboard I see my merchant name" do
       visit "/merchants/#{@merchant.id}/dashboard"
 
-      expect(page).to have_content(@merchant.name)
+      expect(page).to have_content("Welcome #{@merchant.name}")
     end
   end
 end
