@@ -39,3 +39,9 @@
 1. [User Stories](./doc/user_stories.md)
 1. [Extensions](./doc/extensions.md)
 1. [Evaluation](./doc/evaluation.md)
+
+
+https://miro.com/app/board/uXjVMz5suwQ=/
+https://docs.google.com/document/d/1rITzHzPoXYcNLyEDX3FQwvB98AbPXOpPaZ0PCDH7Foo/edit
+https://little-shop-7-yuoe.onrender.com
+
