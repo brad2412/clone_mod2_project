@@ -7,3 +7,11 @@
 
 <%= link_to "Invoices", "/admin/invoices" %>
 <%= link_to "Merchants", "/admin/merchants" %>
+
+<h2>Incomplete Invoices</h2>
+<% @incomplete_invoices.each do |invoice| %>
+  <div id="invoice-<%= invoice.id %>">
+    <%= link_to "Invoice ##{invoice.id}", "/admin/invoices/#{invoice.id}" %><br>
+    <%= invoice.formatted_date %>
+  </div>
+<% end %>
