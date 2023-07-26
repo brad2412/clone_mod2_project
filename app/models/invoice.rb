@@ -5,4 +5,8 @@ class Invoice < ApplicationRecord
   has_many :transactions
 
   enum :status, ["cancelled", "completed", "in progress"]
+
+  def self.incomplete_invoices
+    Invoice.joins(:invoice_items).where.not(invoice_items: {status: 0})
+  end
 end
