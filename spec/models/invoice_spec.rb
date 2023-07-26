@@ -33,11 +33,24 @@ RSpec.describe Invoice do
     transaction7 = Transaction.create!(invoice_id: @invoice7.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: "success")
   end
 
-  it "Can return all invoices with unshipped items" do
+  it "Can return all invoices with unshipped items ordered by oldest to newest" do
     incomplete_invoices = Invoice.incomplete_invoices
 
     expect(incomplete_invoices.count).to eq(4)
     expect(incomplete_invoices.sample).to be_a(Invoice)
     expect(incomplete_invoices.sample.status).to eq("in progress")
+    expect(incomplete_invoices).to eq([@invoice4, @invoice3, @invoice2, @invoice1])
+  end
+
+  it "formats invoice dates as Weekday, Month Day, Year" do
+    full_date = @invoice1.formatted_date.delete(",")
+    date_array = full_date.split
+    weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    days = (1...31).to_a
+    expect(weekdays).to include(date_array[0])
+    expect(months).to include(date_array[1])
+    expect(days).to include(date_array[2].to_i)
+    expect(date_array[3].length).to eq(4)
   end
 end
