@@ -1,0 +1,9 @@
+<h1>Welcome to the Admin Dashboard</h1>
+
+<h2>Top Customers</h2>
+<% @top_customers.each do |customer|%>
+  <p><%= customer.first_name%> <%= customer.last_name %>: <%= customer.total_transactions %> transactions</p>
+<% end %>
+
+<%= link_to "Invoices", "/admin/invoices" %>
+<%= link_to "Merchants", "/admin/merchants" %>
