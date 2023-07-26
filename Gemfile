@@ -59,7 +59,6 @@ group :development, :test do
   gem 'simplecov'
   gem 'shoulda-matchers'
   gem 'orderly'
-
   gem "capybara"
   gem "launchy"
   gem "orderly"
@@ -67,7 +66,6 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "shoulda-matchers"
   gem "simplecov"
-
 end
 
 group :development do
