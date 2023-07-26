@@ -24,9 +24,3 @@ RSpec.describe "Admin Merchants Index Page" do
   end
 end
 
-# 24. Admin Merchants Index
-
-# As an admin,
-# When I visit the admin merchants index (/admin/merchants)
-# Then I see the name of each merchant in the system
-
