@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 require 'simplecov'
+=======
+require "simplecov"
+>>>>>>> 2c295ea0059190440a955e5b2a0039d7f08ca500
 SimpleCov.start
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
@@ -40,6 +44,13 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
+  config.before(:each) do
+    # Truncate all tables to clean up test data before each test
+    ActiveRecord::Base.connection.tables.each do |table|
+      ActiveRecord::Base.connection.execute("TRUNCATE #{table} RESTART IDENTITY CASCADE")
+    end
+  end
+  
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
 
@@ -62,6 +73,8 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  config.include(Shoulda::Matchers::ActiveRecord, type: :model)
 end
 
 Shoulda::Matchers.configure do |config|

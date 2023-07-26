@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
+<<<<<<< HEAD
   resources :merchants, only: [:show] do
     resources :items, only: [:index], controller: "merchants/items"
     resources :invoices, only: [:index], controller: "merchants/invoices"
@@ -11,4 +12,7 @@ Rails.application.routes.draw do
 
 #   get "/merchants/:id/items", to: "merchants/items#index"
 #   get "merchants/:id/items/:id", to: "merchants/items#show"
+=======
+  get "/admin", to: "admin/application#welcome"
+>>>>>>> 2c295ea0059190440a955e5b2a0039d7f08ca500
 end
