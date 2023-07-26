@@ -55,16 +55,11 @@ group :development, :test do
   gem "pry"
   gem "rspec-rails"
   gem 'capybara'
-  gem 'launchy'
-  gem 'simplecov'
   gem 'shoulda-matchers'
   gem 'orderly'
-  gem "capybara"
   gem "launchy"
-  gem "orderly"
   gem "faker"
   gem "factory_bot_rails"
-  gem "shoulda-matchers"
   gem "simplecov"
 end
 
