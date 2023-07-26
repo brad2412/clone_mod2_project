@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-require 'simplecov'
-=======
 require "simplecov"
->>>>>>> 2c295ea0059190440a955e5b2a0039d7f08ca500
 SimpleCov.start
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
