@@ -13,7 +13,7 @@ RSpec.describe "Admin Merchants Index Page" do
   # User Story 24
   it "shows the name of each merchant in the system" do
     visit admin_merchants_path
-    save_and_open_page
+    # save_and_open_page
     expect(page).to have_content("Merchants")
     expect(page).to have_link("Dangerway", href: admin_merchant_path(@merchant1))
     expect(page).to have_link("Targete", href: admin_merchant_path(@merchant2))
