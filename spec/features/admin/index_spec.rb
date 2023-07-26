@@ -18,27 +18,27 @@ RSpec.describe "Admin Dashboard Page" do
     customer6 = Customer.create!(first_name: "Johnny", last_name: "Smith")
     merchant1 = Merchant.create!(name: "Safeway")
     item1 = Item.create!(name: "cheese", description: "its cheese.", unit_price: 1337, merchant_id: merchant1.id)
-    invoice1 = Invoice.create!(status: "completed", customer_id: customer1.id)
-    invoice2 = Invoice.create!(status: "completed", customer_id: customer2.id)
-    invoice3 = Invoice.create!(status: "completed", customer_id: customer3.id)
-    invoice4 = Invoice.create!(status: "completed", customer_id: customer4.id)
-    invoice5 = Invoice.create!(status: "completed", customer_id: customer5.id)
-    invoice6 = Invoice.create!(status: "completed", customer_id: customer6.id)
-    invoice7 = Invoice.create!(status: "completed", customer_id: customer6.id)
-    invoice_item1 = InvoiceItem.create!(item_id: item1.id, invoice_id: invoice1.id, quantity: 5, unit_price: 13635, status: "pending")
-    invoice_item2 = InvoiceItem.create!(item_id: item1.id, invoice_id: invoice2.id, quantity: 9, unit_price: 23324, status: "pending")
-    invoice_item3 = InvoiceItem.create!(item_id: item1.id, invoice_id: invoice3.id, quantity: 9, unit_price: 23324, status: "pending")
-    invoice_item4 = InvoiceItem.create!(item_id: item1.id, invoice_id: invoice4.id, quantity: 9, unit_price: 23324, status: "pending")
-    invoice_item5 = InvoiceItem.create!(item_id: item1.id, invoice_id: invoice5.id, quantity: 9, unit_price: 23324, status: "pending")
-    invoice_item6 = InvoiceItem.create!(item_id: item1.id, invoice_id: invoice6.id, quantity: 9, unit_price: 23324, status: "pending")
-    invoice_item7 = InvoiceItem.create!(item_id: item1.id, invoice_id: invoice6.id, quantity: 9, unit_price: 23324, status: "pending")
-    transaction1 = Transaction.create!(invoice_id: invoice1.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: "failed")
-    transaction2 = Transaction.create!(invoice_id: invoice2.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: "success")
-    transaction3 = Transaction.create!(invoice_id: invoice3.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: "success")
-    transaction4 = Transaction.create!(invoice_id: invoice4.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: "success")
-    transaction5 = Transaction.create!(invoice_id: invoice5.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: "success")
-    transaction6 = Transaction.create!(invoice_id: invoice6.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: "success")
-    transaction7 = Transaction.create!(invoice_id: invoice7.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: "success")
+    @invoice1 = Invoice.create!(status: "in progress", customer_id: customer1.id)
+    @invoice2 = Invoice.create!(status: "in progress", customer_id: customer2.id)
+    @invoice3 = Invoice.create!(status: "in progress", customer_id: customer3.id)
+    @invoice4 = Invoice.create!(status: "in progress", customer_id: customer4.id)
+    @invoice5 = Invoice.create!(status: "completed", customer_id: customer5.id)
+    @invoice6 = Invoice.create!(status: "completed", customer_id: customer6.id)
+    @invoice7 = Invoice.create!(status: "completed", customer_id: customer6.id)
+    invoice_item1 = InvoiceItem.create!(item_id: item1.id, invoice_id: @invoice1.id, quantity: 5, unit_price: 13635, status: "packaged")
+    invoice_item2 = InvoiceItem.create!(item_id: item1.id, invoice_id: @invoice2.id, quantity: 9, unit_price: 23324, status: "packaged")
+    invoice_item3 = InvoiceItem.create!(item_id: item1.id, invoice_id: @invoice3.id, quantity: 9, unit_price: 23324, status: "pending")
+    invoice_item4 = InvoiceItem.create!(item_id: item1.id, invoice_id: @invoice4.id, quantity: 9, unit_price: 23324, status: "pending")
+    invoice_item5 = InvoiceItem.create!(item_id: item1.id, invoice_id: @invoice5.id, quantity: 9, unit_price: 23324, status: "shipped")
+    invoice_item6 = InvoiceItem.create!(item_id: item1.id, invoice_id: @invoice6.id, quantity: 9, unit_price: 23324, status: "shipped")
+    invoice_item7 = InvoiceItem.create!(item_id: item1.id, invoice_id: @invoice6.id, quantity: 9, unit_price: 23324, status: "shipped")
+    transaction1 = Transaction.create!(invoice_id: @invoice1.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: "failed")
+    transaction2 = Transaction.create!(invoice_id: @invoice2.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: "success")
+    transaction3 = Transaction.create!(invoice_id: @invoice3.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: "success")
+    transaction4 = Transaction.create!(invoice_id: @invoice4.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: "success")
+    transaction5 = Transaction.create!(invoice_id: @invoice5.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: "success")
+    transaction6 = Transaction.create!(invoice_id: @invoice6.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: "success")
+    transaction7 = Transaction.create!(invoice_id: @invoice7.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: "success")
   end
 
   # User Story 19
@@ -72,12 +72,48 @@ RSpec.describe "Admin Dashboard Page" do
     expect("Johnny Smith: 2 transactions").to appear_before("Jane Smith: 1 transaction")
   end
 
-# 21. Admin Dashboard Statistics - Top Customers
+  # User story 22
+  it "has an incomplete invoices section" do
+    visit "/admin"
 
-# As an admin,
-# When I visit the admin dashboard (/admin)
-# Then I see the names of the top 5 customers
-# who have conducted the largest number of successful transactions
-# And next to each customer name I see the number of successful transactions they have
-# conducted
+    expect(page).to have_content("Incomplete Invoices")
+
+    
+    expect(page).to have_link("Invoice ##{@invoice1.id}", href: "/admin/invoices/#{@invoice1.id}")
+    expect(page).to have_link("Invoice ##{@invoice2.id}", href: "/admin/invoices/#{@invoice2.id}")
+    expect(page).to have_link("Invoice ##{@invoice3.id}", href: "/admin/invoices/#{@invoice3.id}")
+    expect(page).to have_link("Invoice ##{@invoice4.id}", href: "/admin/invoices/#{@invoice4.id}")
+    
+
+    expect(page).to_not have_content("Invoice #{@invoice5.id}")
+  end
+
+  # User story 23
+  it "lists each incomplete invoice from oldest to newest" do
+    visit "/admin"
+
+    within("#invoice-#{@invoice1.id}") do
+      expect(page).to have_link("Invoice ##{@invoice1.id}")
+      expect(page).to have_content(@invoice1.formatted_date)
+    end
+
+    within("#invoice-#{@invoice2.id}") do
+      expect(page).to have_link("Invoice ##{@invoice2.id}")
+      expect(page).to have_content(@invoice2.formatted_date)
+    end
+
+    within("#invoice-#{@invoice3.id}") do
+      expect(page).to have_link("Invoice ##{@invoice3.id}")
+      expect(page).to have_content(@invoice3.formatted_date)
+    end
+
+    within("#invoice-#{@invoice4.id}") do
+      expect(page).to have_link("Invoice ##{@invoice4.id}")
+      expect(page).to have_content(@invoice4.formatted_date)
+    end
+
+    expect("Invoice ##{@invoice4.id}").to appear_before("Invoice ##{@invoice3.id}")
+    expect("Invoice ##{@invoice3.id}").to appear_before("Invoice ##{@invoice2.id}")
+    expect("Invoice ##{@invoice2.id}").to appear_before("Invoice ##{@invoice1.id}")
+  end
 end
