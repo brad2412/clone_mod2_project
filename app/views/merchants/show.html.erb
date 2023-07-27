@@ -1,0 +1,14 @@
+<br>
+<br>
+<br>
+<h1>Welcome <%= @merchant.name %></h1>
+<p><%= link_to "My Items", merchant_items_path(@merchant) %></p>
+<p><%= link_to "My Invoices", merchant_invoices_path(@merchant) %></p>
+
+<div id="top_5_customers">
+  <h4>Top 5 Customers</h4>
+  <% @merchant.top_5_customers.each do |customer| %>
+  <p><%= customer.first_name %> <%= customer.last_name %> Successful Transactions: <%= customer.total_transactions %></p>
+  <% end %>
+
+</div>

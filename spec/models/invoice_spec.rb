@@ -1,5 +1,16 @@
 require "rails_helper"
 
+RSpec.describe Invoice, type: :model do
+  describe "relationships" do 
+    it {should belong_to :customer }
+    it {should have_many :invoice_items }
+    it {should have_many(:items).through(:invoice_items) }
+    it {should have_many :transactions }
+  end
+
+  describe "validations" do
+    it { should validate_presence_of :status }
+    
 RSpec.describe Invoice do
   before(:each) do
     customer1 = Customer.create!(first_name: "Bob", last_name: "Smith")
