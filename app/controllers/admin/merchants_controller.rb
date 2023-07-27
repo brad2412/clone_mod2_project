@@ -35,6 +35,7 @@ class Admin::MerchantsController < ApplicationController
     merchant = Merchant.new(merchant_params)
     if merchant.save
       redirect_to admin_merchants_path
+      flash[:notice] = "#{merchant.name} was successfully created"
     else 
       redirect_to new_admin_merchant_path
       flash[:error] = "Please fill in the name"
