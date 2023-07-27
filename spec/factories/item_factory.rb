@@ -4,7 +4,6 @@ FactoryBot.define do
     description { Faker::Lorem.sentence }
     unit_price { Faker::Number.number(digits: 5) }
     association :merchant
-    # association :invoice_item
   end
 end
 

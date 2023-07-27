@@ -10,7 +10,9 @@ RSpec.describe "Admin Dashboard Page" do
   # # let!(:transaction) {create(:transaction)}
   # Rake::Task['db:seed'].invoke
   before(:each) do
+    # customer =  create(:customer)
     customer1 = Customer.create!(first_name: "Bob", last_name: "Smith")
+    # invoices =  create_list(:invoice, 3, customer: customer1)
     customer2 = Customer.create!(first_name: "Jane", last_name: "Smith")
     customer3 = Customer.create!(first_name: "John", last_name: "Smith")
     customer4 = Customer.create!(first_name: "Janet", last_name: "Smith")
