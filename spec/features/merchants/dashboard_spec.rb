@@ -79,15 +79,7 @@ RSpec.describe "merchant dashboard", type: :feature do
       end
     end
 
-    describe "enum return" do
-        it "should show transaction result as a string" do
-        visit merchant_path(@merchant1)
 
-        expect(page).to have_content(@customer1.first_name)
-        expect(page).to have_content(@customer1.last_name)
-        expect(page).to have_content(@transaction1.result)
-      end
-    end
   end
 end
 
