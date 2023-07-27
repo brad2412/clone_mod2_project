@@ -66,7 +66,7 @@ RSpec.describe "Admin Merchants Index Page" do
   # User story 27 continued/story 28
   it "can enable or disable merchants" do
     visit admin_merchants_path
-    save_and_open_page
+    # save_and_open_page
     within(".table-container") do
       within(".enabled") do
         expect(page).to have_content("Enabled Merchants")
@@ -90,7 +90,7 @@ RSpec.describe "Admin Merchants Index Page" do
     within("tr#dm-#{@merchant5.id}") do
       click_button("Enable Merchant")
     end
-    save_and_open_page
+    # save_and_open_page
     within(".enabled") do
       expect(page).to_not have_content("Dangerway")
       expect(page).to have_content("Targete")
@@ -107,7 +107,11 @@ RSpec.describe "Admin Merchants Index Page" do
   end
 
   #User story 30
-  it "has a section for top five merchants by total revenue" do
+  xit "has a section for top five merchants by total revenue" do
+    visit admin_merchants_path
+    save_and_open_page
+    expect(page).to have_content("Top Five Merchants by Total Revenue")
+
 
   end
   # 30. Admin Merchants: Top 5 Merchants by Revenue
