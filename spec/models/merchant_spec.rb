@@ -50,6 +50,12 @@ RSpec.describe Merchant, type: :model do
     @transaction7 = Transaction.create!(invoice_id: @invoice7.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: 1)
 
 end
- 
+ describe "#top_5_customers" do
+  it "should return only the top 5 customers with SUCCESSFUL transactions" do
+    top_customers = @merchant1.top_5_customers
+    expect(top_customers).to eq([@customer6, @customer2, @customer3, @customer4, @customer5])
+    expect(top_customers).to_not eq(@customer1)
+  end
+ end
 
 end
