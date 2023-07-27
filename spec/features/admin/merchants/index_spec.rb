@@ -26,38 +26,37 @@ RSpec.describe "Admin Merchants Index Page" do
   # User story 27
   it "has buttons to disable or enable each merchant" do
     visit admin_merchants_path
-
-    within("#merchant-#{@merchant1.id}") do
+    within("tr#em-#{@merchant1.id}") do
       expect(page).to have_content("Enabled")
       expect(page).to_not have_content("Disabled")
       expect(page).to have_button("Disable Merchant")
     end
 
-    within("#merchant-#{@merchant2.id}") do
+    within("tr#em-#{@merchant2.id}") do
       expect(page).to have_content("Enabled")
       expect(page).to_not have_content("Disabled")
       expect(page).to have_button("Disable Merchant")
     end
 
-    within("#merchant-#{@merchant3.id}") do
+    within("tr#em-#{@merchant3.id}") do
       expect(page).to have_content("Enabled")
       expect(page).to_not have_content("Disabled")
       expect(page).to have_button("Disable Merchant")
     end
 
-    within("#merchant-#{@merchant4.id}") do
+    within("tr#em-#{@merchant4.id}") do
       expect(page).to have_content("Enabled")
       expect(page).to_not have_content("Disabled")
       expect(page).to have_button("Disable Merchant")
     end
 
-    within("#merchant-#{@merchant5.id}") do
+    within("tr#dm-#{@merchant5.id}") do
       expect(page).to have_content("Disabled")
       expect(page).to_not have_content("Enabled")
       expect(page).to have_button("Enable Merchant")
     end
 
-    within("#merchant-#{@merchant6.id}") do
+    within("tr#dm-#{@merchant6.id}") do
       expect(page).to have_content("Disabled")
       expect(page).to_not have_content("Enabled")
       expect(page).to have_button("Enable Merchant")
@@ -67,30 +66,32 @@ RSpec.describe "Admin Merchants Index Page" do
   # User story 27 continued/story 28
   it "can enable or disable merchants" do
     visit admin_merchants_path
-    
-    within("#enabled") do
-      expect(page).to have_content("Enabled Merchants")
-      expect(page).to have_content("Dangerway")
-      expect(page).to have_content("Targete")
-      expect(page).to have_content("Fifteen Bears")
-      expect(page).to have_content("Queen Soopers")
+    save_and_open_page
+    within(".table-container") do
+      within(".enabled") do
+        expect(page).to have_content("Enabled Merchants")
+        expect(page).to have_content("Dangerway")
+        expect(page).to have_content("Targete")
+        expect(page).to have_content("Fifteen Bears")
+        expect(page).to have_content("Queen Soopers")
+      end
+      
+      within(".disabled") do
+        expect(page).to have_content("Disabled Merchants")
+        expect(page).to have_content("Freddy Meyers")
+        expect(page).to have_content("Timmy Hortons")
+      end
     end
 
-    within("#disabled") do
-      expect(page).to have_content("Disabled Merchants")
-      expect(page).to have_content("Freddy Meyers")
-      expect(page).to have_content("Timmy Hortons")
+    within("tr#em-#{@merchant1.id}") do
+      click_button("Disable Merchant")
     end
 
-    within("#merchant-#{@merchant1.id}") do
-      click_button("Disable")
+    within("tr#dm-#{@merchant5.id}") do
+      click_button("Enable Merchant")
     end
-
-    within("#merchant-#{@merchant5.id}") do
-      click_button("Enable")
-    end
-
-    within("#enabled") do
+    save_and_open_page
+    within(".enabled") do
       expect(page).to_not have_content("Dangerway")
       expect(page).to have_content("Targete")
       expect(page).to have_content("Fifteen Bears")
@@ -98,7 +99,7 @@ RSpec.describe "Admin Merchants Index Page" do
       expect(page).to have_content("Freddy Meyers")
     end
 
-    within("#disabled") do
+    within(".disabled") do
       expect(page).to_not have_content("Freddy Meyers")
       expect(page).to have_content("Timmy Hortons")
       expect(page).to have_content("Dangerway")

@@ -2,8 +2,8 @@
 <h1>Merchants</h1>
 
 <div class="table-container">
-  <table>
-    <caption class="enabled">Enabled Merchants</caption>
+  <table class="enabled">
+    <caption class="ena">Enabled Merchants</caption>
     <thead>
       <tr>
         <th>Name</th>
@@ -13,7 +13,7 @@
     </thead>
     <tbody>
       <% @merchants.enabled.each do |merchant| %>
-        <tr>
+        <tr id="em-<%= merchant.id %>">
           <td><%= link_to merchant.name, admin_merchant_path(merchant) %></td>
           <td>Enabled</td>
           <td>
@@ -24,8 +24,8 @@
     </tbody>
   </table>
 
-  <table>
-    <caption class="disabled">Disabled Merchants</caption>
+  <table class="disabled">
+    <caption class="dis">Disabled Merchants</caption>
     <thead>
       <tr>
         <th>Name</th>
@@ -35,7 +35,7 @@
     </thead>
     <tbody>
       <% @merchants.disabled.each do |merchant| %>
-        <tr>
+        <tr id="dm-<%= merchant.id %>">
           <td><%= link_to merchant.name, admin_merchant_path(merchant) %></td>
           <td>Disabled</td>
           <td>
