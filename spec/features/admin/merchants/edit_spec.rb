@@ -46,6 +46,5 @@ RSpec.describe "The Admin Merchants Edit Page" do
     expect(current_path).to eq(edit_admin_merchant_path(@merchant4))
     expect(page).to have_content("Please fill in the name")
     expect(page).to have_content("Update Merchant: Queen Soopers")
-    # save_and_open_page
   end
 end
