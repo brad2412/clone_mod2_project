@@ -25,10 +25,27 @@ RSpec.describe "The Admin Merchants Edit Page" do
     # save_and_open_page
     expect(page).to have_content("Update Merchant: Queen Soopers")
     expect(page).to have_field("Name", with: "Queen Soopers")
+    fill_in("Name", with: "King Soopers")
     click_button "Submit"
-    save_and_open_page
+    # save_and_open_page
     expect(current_path).to eq(admin_merchant_path(@merchant4))
     expect(page).to have_content("Merchant was successfully updated")
-    expect(page).to have_content("Queen Soopers")
+    expect(page).to have_content("King Soopers")
+    expect(page).to_not have_content("Queen Soopers")
+  end
+
+  # User story 26.sad path
+  it "throws error if name deleted/form submitted while blank" do
+    visit edit_admin_merchant_path(@merchant4)
+    # save_and_open_page
+    expect(page).to have_content("Update Merchant: Queen Soopers")
+    expect(page).to have_field("Name", with: "Queen Soopers")
+    fill_in("Name", with: "")
+    click_button "Submit"
+    # save_and_open_page
+    expect(current_path).to eq(edit_admin_merchant_path(@merchant4))
+    expect(page).to have_content("Please fill in the name")
+    expect(page).to have_content("Update Merchant: Queen Soopers")
+    # save_and_open_page
   end
 end
