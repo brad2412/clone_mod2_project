@@ -20,14 +20,15 @@ RSpec.describe "The Admin Merchants Edit Page" do
   end
 
   # User story 26.continued
-  it "has a form to edit this merchant" do
+  it "has a prepopulated form to edit this merchant" do
     visit edit_admin_merchant_path(@merchant4)
     # save_and_open_page
     expect(page).to have_content("Update Merchant: Queen Soopers")
-    fill_in "Name", with: "King Soopers"
+    expect(page).to have_field("Name", with: "Queen Soopers")
     click_button "Submit"
-    # save_and_open_page
+    save_and_open_page
     expect(current_path).to eq(admin_merchant_path(@merchant4))
-    expect(page).to have_content("King Soopers")
+    expect(page).to have_content("Merchant was successfully updated")
+    expect(page).to have_content("Queen Soopers")
   end
 end

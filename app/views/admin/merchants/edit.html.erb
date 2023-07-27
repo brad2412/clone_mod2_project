@@ -1,6 +1,6 @@
 <h1>Update Merchant: <%= @merchant.name%></h1>
 
-<%= form_with url: admin_merchant_path(@merchant), method: :patch do |f|%>
+<%= form_with model: @merchant, url: admin_merchant_path(@merchant), method: :patch do |f|%>
   <%= f.label :name %>
   <%= f.text_field :name %>
   <%= f.submit "Submit" %>
