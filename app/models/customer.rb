@@ -5,6 +5,9 @@ class Customer < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
   
+  def total_transactions
+    transactions.where(result: "success").count
+  end
   def self.top_customers
     # binding.pry
     Customer.joins(:transactions)
@@ -14,8 +17,5 @@ class Customer < ApplicationRecord
             .limit(5)
   end
 
-  def total_transactions
-    transactions.where(result: "success").count
-  end
 
 end

@@ -68,7 +68,7 @@ RSpec.describe "merchant dashboard", type: :feature do
     describe "Merchant Dashboard Statistics" do
       it "should show largest number of successful transactions" do
         visit merchant_path(@merchant1)
-        
+
         within "#top_5_customers" do
 
           expect(page).to have_content("#{@customer6.first_name} #{@customer6.last_name} Successful Transactions: #{@customer6.total_transactions}")
