@@ -2,12 +2,12 @@ require "rails_helper"
 
 RSpec.describe "Admin Merchants Index Page" do
   before(:each) do
-    @merchant1 = Merchant.create!(name: "Dangerway")
-    @merchant2 = Merchant.create!(name: "Targete")
-    @merchant3 = Merchant.create!(name: "Fifteen Bears")
-    @merchant4 = Merchant.create!(name: "Queen Soopers")
-    @merchant5 = Merchant.create!(name: "Freddy Meyers")
-    @merchant6 = Merchant.create!(name: "Timmy Hortons")
+    @merchant1 = Merchant.create!(name: "Dangerway", enabled: true)
+    @merchant2 = Merchant.create!(name: "Targete", enabled: true)
+    @merchant3 = Merchant.create!(name: "Fifteen Bears", enabled: true)
+    @merchant4 = Merchant.create!(name: "Queen Soopers", enabled: true)
+    @merchant5 = Merchant.create!(name: "Freddy Meyers", enabled: false)
+    @merchant6 = Merchant.create!(name: "Timmy Hortons", enabled: false)
   end
 
   # User Story 24
@@ -21,6 +21,88 @@ RSpec.describe "Admin Merchants Index Page" do
     expect(page).to have_link("Queen Soopers", href: admin_merchant_path(@merchant4))
     expect(page).to have_link("Freddy Meyers", href: admin_merchant_path(@merchant5))
     expect(page).to have_link("Timmy Hortons", href: admin_merchant_path(@merchant6))
+  end
+
+  # User story 27
+  it "has buttons to disable or enable each merchant" do
+    visit admin_merchants_path
+
+    within("#merchant-#{@merchant1.id}") do
+      expect(page).to have_content("Enabled")
+      expect(page).to_not have_content("Disabled")
+      expect(page).to have_button("Disable Merchant")
+    end
+
+    within("#merchant-#{@merchant2.id}") do
+      expect(page).to have_content("Enabled")
+      expect(page).to_not have_content("Disabled")
+      expect(page).to have_button("Disable Merchant")
+    end
+
+    within("#merchant-#{@merchant3.id}") do
+      expect(page).to have_content("Enabled")
+      expect(page).to_not have_content("Disabled")
+      expect(page).to have_button("Disable Merchant")
+    end
+
+    within("#merchant-#{@merchant4.id}") do
+      expect(page).to have_content("Enabled")
+      expect(page).to_not have_content("Disabled")
+      expect(page).to have_button("Disable Merchant")
+    end
+
+    within("#merchant-#{@merchant5.id}") do
+      expect(page).to have_content("Disabled")
+      expect(page).to_not have_content("Enabled")
+      expect(page).to have_button("Enable Merchant")
+    end
+
+    within("#merchant-#{@merchant6.id}") do
+      expect(page).to have_content("Disabled")
+      expect(page).to_not have_content("Enabled")
+      expect(page).to have_button("Enable Merchant")
+    end
+  end
+
+  # User story 27 continued/story 28
+  it "can enable or disable merchants" do
+    visit admin_merchants_path
+    
+    within("#enabled") do
+      expect(page).to have_content("Enabled Merchants")
+      expect(page).to have_content("Dangerway")
+      expect(page).to have_content("Targete")
+      expect(page).to have_content("Fifteen Bears")
+      expect(page).to have_content("Queen Soopers")
+    end
+
+    within("#disabled") do
+      expect(page).to have_content("Disabled Merchants")
+      expect(page).to have_content("Freddy Meyers")
+      expect(page).to have_content("Timmy Hortons")
+    end
+
+    within("#merchant-#{@merchant1.id}") do
+      click_button("Disable")
+    end
+
+    within("#merchant-#{@merchant5.id}") do
+      click_button("Enable")
+    end
+
+    within("#enabled") do
+      expect(page).to_not have_content("Dangerway")
+      expect(page).to have_content("Targete")
+      expect(page).to have_content("Fifteen Bears")
+      expect(page).to have_content("Queen Soopers")
+      expect(page).to have_content("Freddy Meyers")
+    end
+
+    within("#disabled") do
+      expect(page).to_not have_content("Freddy Meyers")
+      expect(page).to have_content("Timmy Hortons")
+      expect(page).to have_content("Dangerway")
+    end
   end
 end
 
