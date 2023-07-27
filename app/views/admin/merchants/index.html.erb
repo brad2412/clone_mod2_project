@@ -1,30 +1,48 @@
-<h1>Merchants</h1>
 <%= link_to "Create New Merchant", new_admin_merchant_path %>
+<h1>Merchants</h1>
 
+<div class="table-container">
+  <table>
+    <caption class="enabled">Enabled Merchants</caption>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @merchants.enabled.each do |merchant| %>
+        <tr>
+          <td><%= link_to merchant.name, admin_merchant_path(merchant) %></td>
+          <td>Enabled</td>
+          <td>
+            <%= button_to "Disable Merchant", admin_merchant_path(merchant), method: :patch, params: { enabled: false } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<section id="enabled">
-<h3>Enabled Merchants</h3>
-<% @merchants.enabled.each do |merchant| %>
-  <div id="merchant-<%= merchant.id %>">
-    <%= link_to merchant.name, admin_merchant_path(merchant) %><br>
-    <p>Enabled</p>
-    <%= button_to "Disable Merchant", admin_merchant_path(merchant), method: :patch, params: {enabled: false} %>
-  </div>
-  <br>
-  <br>
-<% end %>
-</section>
-
-
-<section id="disabled">
-<h3>Disabled Merchants</h3>
-<% @merchants.disabled.each do |merchant| %>
-  <div id="merchant-<%= merchant.id %>">
-    <%= link_to merchant.name, admin_merchant_path(merchant) %><br>
-    <p>Disabled</p>
-    <%= button_to "Enable Merchant", admin_merchant_path(merchant), method: :patch, params: {enabled: true} %>
-  </div>
-  <br>
-  <br>
-<% end %>
-</section>
+  <table>
+    <caption class="disabled">Disabled Merchants</caption>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @merchants.disabled.each do |merchant| %>
+        <tr>
+          <td><%= link_to merchant.name, admin_merchant_path(merchant) %></td>
+          <td>Disabled</td>
+          <td>
+            <%= button_to "Enable Merchant", admin_merchant_path(merchant), method: :patch, params: { enabled: true } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
