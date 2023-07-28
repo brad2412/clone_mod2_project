@@ -90,15 +90,15 @@ RSpec.describe Merchant, type: :model do
       expect(top_customers).to eq([@customer6, @customer2, @customer3, @customer4, @customer5])
       expect(top_customers).to_not eq(@customer1)
     end
-   end
+  end
   
-   describe "#items_ready_to_ship" do
+  describe "#items_ready_to_ship" do
     it "should return only the items that have a status of packaged" do
       expect(@merchant1.items_ready_to_ship).to eq([@item1])
       expect(@merchant1.items_ready_to_ship).to_not eq([@item2])
     end
-   end
-   
+  end
+
   it "returns all enabled merchants" do
     expect(Merchant.enabled).to eq([@merchant1, @merchant2, @merchant3, @merchant4])
   end
