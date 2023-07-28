@@ -21,11 +21,11 @@ RSpec.describe "Admin Merchant Create Page" do
     click_button("Submit")
 
     expect(current_path).to eq(admin_merchants_path)
-    within("#disabled") do
+    within(".disabled") do
       expect(page).to have_content("FloorMart")
     end
 
-    within("#enabled") do
+    within(".enabled") do
       expect(page).to_not have_content("FloorMart")
     end
   end
