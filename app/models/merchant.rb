@@ -4,7 +4,6 @@ class Merchant < ApplicationRecord
   has_many :items
   has_many :invoice_items, through: :items
   has_many :invoices, through: :items
-  # has_many :invoices, through: :invoice_items
   has_many :transactions, through: :invoices
   has_many :customers, through: :invoices
 
@@ -30,17 +29,30 @@ class Merchant < ApplicationRecord
   
 
   def total_revenue
-    success = invoices.joins(:transactions)
-                      .where(transactions: { result: "success" })
-                      .distinct
-                      .pluck(:id)
-
-    InvoiceItem.joins(:invoice)
-                .where(invoice_id: success)
-                .sum('quantity * unit_price')
+    items.joins(:transactions)
+      .where(transactions: {result: "success"})
+      .sum('invoice_items.quantity*invoice_items.unit_price')
   end
-  # Notes on Revenue Calculation:
-  # - Only invoices with at least one successful transaction should count towards revenue
-  # - Revenue for an invoice should be calculated as the sum of the revenue of all invoice items
-  # - Revenue for an invoice item should be calculated as the invoice item unit price multiplied by the quantity (do not use the item unit price) 
+
+  def formatted_total_revenue
+    revenue = total_revenue/100.to_f
+    formatted_amount = sprintf("$%.2f", revenue)
+    if formatted_amount.length > 7
+      formatted_amount = formatted_amount.gsub!(/(\d)(?=(\d{3})+(?!\d))/, "\\1,")
+    end
+    formatted_amount
+  end
+
+  def self.top_5_by_total_revenue
+    select("merchants.*, sum(invoice_items.quantity*invoice_items.unit_price) as total_revenue")
+      .joins(:transactions)
+      .where(transactions: {result: "success"})
+      .group(:id)
+      .order('total_revenue desc')
+      .limit(5)
+  end
+
+  def best_day
+    
+  end
 end
