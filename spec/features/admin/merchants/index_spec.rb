@@ -8,6 +8,74 @@ RSpec.describe "Admin Merchants Index Page" do
     @merchant4 = Merchant.create!(name: "Queen Soopers", enabled: true)
     @merchant5 = Merchant.create!(name: "Freddy Meyers", enabled: false)
     @merchant6 = Merchant.create!(name: "Timmy Hortons", enabled: false)
+    @merchant7 = Merchant.create!(name: "ZaZa", enabled: false)
+
+    @merchant1_items = create_list(:item, 10, merchant: @merchant1)
+    @merchant2_items = create_list(:item, 10, merchant: @merchant2)
+    @merchant3_items = create_list(:item, 10, merchant: @merchant3)
+    @merchant4_items = create_list(:item, 10, merchant: @merchant4)
+    @merchant5_items = create_list(:item, 10, merchant: @merchant5)
+    @merchant6_items = create_list(:item, 10, merchant: @merchant6)
+    @merchant7_items = create_list(:item, 10, merchant: @merchant7)
+
+    @customer1 = Customer.create!(first_name: "Bob", last_name: "Smith")
+    @customer2 = Customer.create!(first_name: "Jane", last_name: "Smith")
+    @customer3 = Customer.create!(first_name: "John", last_name: "Smith")
+    @customer4 = Customer.create!(first_name: "Janet", last_name: "Smith")
+    @customer5 = Customer.create!(first_name: "Johnathan", last_name: "Smith")
+    @customer6 = Customer.create!(first_name: "Johnny", last_name: "Smith")
+    @customer7 = Customer.create!(first_name: "Joseph", last_name: "Smith")
+    @customer8 = Customer.create!(first_name: "Smelly", last_name: "Cow")
+
+    @customer1_invoices = create_list(:invoice, 5, customer: @customer1)
+    @customer2_invoices = create_list(:invoice, 5, customer: @customer2)
+    @customer3_invoices = create_list(:invoice, 5, customer: @customer3)
+    @customer4_invoices = create_list(:invoice, 5, customer: @customer4)
+    @customer5_invoices = create_list(:invoice, 5, customer: @customer5)
+    @customer6_invoices = create_list(:invoice, 5, customer: @customer6)
+    @customer7_invoices = create_list(:invoice, 5, customer: @customer7)
+
+    @invoice_item1 = InvoiceItem.create!(invoice: @customer1_invoices[0], item: @merchant1_items[0], unit_price: 423, quantity: 4)
+    @invoice_item2 = InvoiceItem.create!(invoice: @customer1_invoices[2], item: @merchant1_items[4], unit_price: 5463, quantity: 6)
+    @invoice_item3 = InvoiceItem.create!(invoice: @customer1_invoices[3], item: @merchant1_items[5], unit_price: 543, quantity: 9)
+    @invoice_item4 = InvoiceItem.create!(invoice: @customer1_invoices[1], item: @merchant1_items[6], unit_price: 543, quantity: 3)
+    @invoice_item5 = InvoiceItem.create!(invoice: @customer2_invoices[0], item: @merchant1_items[6], unit_price: 54, quantity: 8)
+    @invoice_item6 = InvoiceItem.create!(invoice: @customer2_invoices[1], item: @merchant2_items[0], unit_price: 7465, quantity: 4)
+    @invoice_item7 = InvoiceItem.create!(invoice: @customer2_invoices[4], item: @merchant2_items[3], unit_price: 45322, quantity: 3)
+    @invoice_item8 = InvoiceItem.create!(invoice: @customer3_invoices[0], item: @merchant3_items[0], unit_price: 76556, quantity: 2)
+    @invoice_item9 = InvoiceItem.create!(invoice: @customer3_invoices[2], item: @merchant3_items[3], unit_price: 6453, quantity: 1)
+    @invoice_item10 = InvoiceItem.create!(invoice: @customer3_invoices[4], item: @merchant4_items[7], unit_price: 4532, quantity: 8)
+    @invoice_item11 = InvoiceItem.create!(invoice: @customer4_invoices[0], item: @merchant4_items[7], unit_price: 9876, quantity: 4)
+    @invoice_item12 = InvoiceItem.create!(invoice: @customer4_invoices[3], item: @merchant4_items[9], unit_price: 4533, quantity: 4)
+    @invoice_item13 = InvoiceItem.create!(invoice: @customer5_invoices[0], item: @merchant5_items[0], unit_price: 768, quantity: 8)
+    @invoice_item14 = InvoiceItem.create!(invoice: @customer5_invoices[1], item: @merchant5_items[1], unit_price: 8765, quantity: 3)
+    @invoice_item15 = InvoiceItem.create!(invoice: @customer5_invoices[4], item: @merchant5_items[7], unit_price: 7645, quantity: 4)
+    @invoice_item16 = InvoiceItem.create!(invoice: @customer6_invoices[0], item: @merchant6_items[0], unit_price: 4623, quantity: 4)
+    @invoice_item17 = InvoiceItem.create!(invoice: @customer6_invoices[1], item: @merchant6_items[7], unit_price: 6876, quantity: 4)
+    @invoice_item18 = InvoiceItem.create!(invoice: @customer7_invoices[0], item: @merchant6_items[8], unit_price: 4265, quantity: 4)
+    @invoice_item19 = InvoiceItem.create!(invoice: @customer7_invoices[3], item: @merchant6_items[3], unit_price: 97568, quantity: 4)
+    @invoice_item20 = InvoiceItem.create!(invoice: @customer7_invoices[2], item: @merchant7_items[3], unit_price: 3254, quantity: 4)
+    create(:transaction, invoice: @customer1_invoices[0], result: "success")
+    create(:transaction, invoice: @customer1_invoices[2], result: "failed")
+    create(:transaction, invoice: @customer1_invoices[3], result: "success")
+    create(:transaction, invoice: @customer1_invoices[1], result: "success")
+    create(:transaction, invoice: @customer2_invoices[0], result: "failed")
+    create(:transaction, invoice: @customer2_invoices[1], result: "success")
+    create(:transaction, invoice: @customer2_invoices[4], result: "success")
+    create(:transaction, invoice: @customer3_invoices[0], result: "failed")
+    create(:transaction, invoice: @customer3_invoices[2], result: "success")
+    create(:transaction, invoice: @customer3_invoices[4], result: "success")
+    create(:transaction, invoice: @customer4_invoices[0], result: "failed")
+    create(:transaction, invoice: @customer4_invoices[3], result: "success")
+    create(:transaction, invoice: @customer5_invoices[0], result: "success")
+    create(:transaction, invoice: @customer5_invoices[1], result: "failed")
+    create(:transaction, invoice: @customer5_invoices[4], result: "success")
+    create(:transaction, invoice: @customer6_invoices[0], result: "failed")
+    create(:transaction, invoice: @customer6_invoices[1], result: "success")
+    create(:transaction, invoice: @customer7_invoices[0], result: "success")
+    create(:transaction, invoice: @customer7_invoices[3], result: "success")
+    create(:transaction, invoice: @customer7_invoices[2], result: "failed")
+    create(:transaction, invoice: @customer7_invoices[2], result: "success")
   end
 
   # User Story 24
@@ -107,24 +175,81 @@ RSpec.describe "Admin Merchants Index Page" do
   end
 
   #User story 30
-  xit "has a section for top five merchants by total revenue" do
+  it "has a section for top five merchants by total revenue" do
     visit admin_merchants_path
-    save_and_open_page
-    expect(page).to have_content("Top Five Merchants by Total Revenue")
+    
+    expect(page).to have_content("Top Five Merchants By Total Revenue")
 
+    within("#top_five") do
+      within("#merchant-#{@merchant6.id}") do
+        expect(page).to have_link("#{@merchant6.name}", href: admin_merchant_path(@merchant6))
+        expect(page).to have_content("Total Revenue: #{@merchant6.formatted_total_revenue}")
+      end
 
+      within("#merchant-#{@merchant2.id}") do
+        expect(page).to have_link("#{@merchant2.name}", href: admin_merchant_path(@merchant2))
+        expect(page).to have_content("Total Revenue: #{@merchant2.formatted_total_revenue}")
+      end
+
+      within("#merchant-#{@merchant4.id}") do
+        expect(page).to have_link("#{@merchant4.name}", href: admin_merchant_path(@merchant4))
+        expect(page).to have_content("Total Revenue: #{@merchant4.formatted_total_revenue}")
+      end 
+
+      within("#merchant-#{@merchant5.id}") do
+        expect(page).to have_link("#{@merchant5.name}", href: admin_merchant_path(@merchant5))
+        expect(page).to have_content("Total Revenue: #{@merchant5.formatted_total_revenue}")
+      end
+      
+      within("#merchant-#{@merchant7.id}") do
+        expect(page).to have_link("#{@merchant7.name}", href: admin_merchant_path(@merchant7))
+        expect(page).to have_content("Total Revenue: #{@merchant7.formatted_total_revenue}")
+      end
+
+      expect(@merchant6.name).to appear_before(@merchant2.name)
+      expect(@merchant2.name).to appear_before(@merchant4.name)
+      expect(@merchant4.name).to appear_before(@merchant5.name)
+      expect(@merchant5.name).to appear_before(@merchant7.name)
+    end
   end
-  # 30. Admin Merchants: Top 5 Merchants by Revenue
 
-  # As an admin,
-  # When I visit the admin merchants index (/admin/merchants)
-  # Then I see the names of the top 5 merchants by total revenue generated
-  # And I see that each merchant name links to the admin merchant show page for that merchant
-  # And I see the total revenue generated next to each merchant name
-  
-  # Notes on Revenue Calculation:
-  # - Only invoices with at least one successful transaction should count towards revenue
-  # - Revenue for an invoice should be calculated as the sum of the revenue of all invoice items
-  # - Revenue for an invoice item should be calculated as the invoice item unit price multiplied by the quantity (do not use the item unit price)  
+  #User story 31
+  it "lists the most profitable date for each of top five merchants" do
+    visit admin_merchants_path
+    
+    expect(page).to have_content("Top Five Merchants By Total Revenue")
+
+    within("#top_five") do
+      within("#merchant-#{@merchant6.id}") do
+        expect(page).to have_content("Top selling date for #{@merchant6.name} was #{@merchant6.best_day}")
+      end
+      
+      within("#merchant-#{@merchant2.id}") do
+        expect(page).to have_content("Top selling date for #{@merchant2.name} was #{@merchant2.best_day}")
+      end
+      
+      within("#merchant-#{@merchant4.id}") do
+        expect(page).to have_content("Top selling date for #{@merchant4.name} was #{@merchant4.best_day}")
+      end 
+      
+      within("#merchant-#{@merchant5.id}") do
+        expect(page).to have_content("Top selling date for #{@merchant5.name} was #{@merchant5.best_day}")
+      end
+      
+      within("#merchant-#{@merchant7.id}") do
+        expect(page).to have_content("Top selling date for #{@merchant7.name} was #{@merchant7.best_day}")
+      end
+    end
+  end
+
+
+#   31. Admin Merchants: Top Merchant's Best Day
+
+# As an admin,
+# When I visit the admin merchants index
+# Then next to each of the 5 merchants by revenue I see the date with the most revenue for each merchant.
+# And I see a label “Top selling date for <merchant name> was <date with most sales>"
+
+# Note: use the invoice date. If there are multiple days with equal number of sales, return the most recent day.
 end
 
