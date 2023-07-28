@@ -10,8 +10,8 @@ RSpec.describe Invoice, type: :model do
 
   describe "validations" do
     it { should validate_presence_of :status }
-    
-RSpec.describe Invoice do
+  end
+
   before(:each) do
     customer1 = Customer.create!(first_name: "Bob", last_name: "Smith")
     customer2 = Customer.create!(first_name: "Jane", last_name: "Smith")

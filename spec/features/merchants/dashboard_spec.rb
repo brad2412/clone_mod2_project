@@ -23,7 +23,7 @@ RSpec.describe "merchant dashboard", type: :feature do
       @invoice7 = Invoice.create!(status: "completed", customer_id: @customer6.id)
 
       @invoice_item1 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice1.id, quantity: 5, unit_price: 13635, status: "pending")
-      @invoice_item2 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice2.id, quantity: 9, unit_price: 23324, status: "pending")
+      @invoice_item2 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice2.id, quantity: 9, unit_price: 23324, status: "packaged")
       @invoice_item3 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice3.id, quantity: 9, unit_price: 23324, status: "pending")
       @invoice_item4 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice4.id, quantity: 9, unit_price: 23324, status: "pending")
       @invoice_item5 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice5.id, quantity: 9, unit_price: 23324, status: "pending")
@@ -77,19 +77,33 @@ RSpec.describe "merchant dashboard", type: :feature do
           expect(page).to have_content("#{@customer3.first_name} #{@customer3.last_name} Successful Transactions: #{@customer3.total_transactions}")
           expect(page).to have_content("#{@customer2.first_name} #{@customer2.last_name} Successful Transactions: #{@customer2.total_transactions}")
         end
-        #expect(page).to appear_before(1-5)
       end
     end
 
+    describe "items_ready_to_ship" do
+      it "should show item names that have been ordered but not shipped with invoice id" do
+        visit merchant_path(@merchant1)
+        expect(page).to have_content("Items Ready To Ship")
 
+        within '#items_ready_to_ship' do
+
+          expect(page).to have_content("Item Name: #{@item1.name}")
+          expect(page).to have_link(@invoice2.id)
+          click_link(@invoice2.id)
+          expect(current_path).to eq("/merchants/#{@merchant1.id}/invoices/#{@invoice2.id}")
+        end
+      end
+    end
   end
 end
 
-# 3. Merchant Dashboard Statistics - Favorite Customers
+# 4. Merchant Dashboard Items Ready to Ship
 
-# As a merchant,
+# As a merchant
 # When I visit my merchant dashboard (/merchants/:merchant_id/dashboard)
-# Then I see the names of the top 5 customers
-# who have conducted the largest number of successful transactions with my merchant
-# And next to each customer name I see the number of successful transactions they have
-# conducted with my merchant
+# Then I see a section for "Items Ready to Ship"
+# In that section I see a list of the names of all of my items that
+# have been ordered and have not yet been shipped,
+# And next to each Item I see the id of the invoice that ordered my item
+# And each invoice id is a link to my merchant's invoice show page
+

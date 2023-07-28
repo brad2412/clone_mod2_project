@@ -22,8 +22,10 @@ RSpec.describe Merchant, type: :model do
     @customer5 = Customer.create!(first_name: "Johnathan", last_name: "Smith")
     @customer6 = Customer.create!(first_name: "Johnny", last_name: "Smith")
     @customer7 = Customer.create!(first_name: "Joseph", last_name: "Smith")
+    @customer8 = Customer.create!(first_name: "Smelly", last_name: "Cow")
 
     @item1 = Item.create!(name: "cheese", description: "its cheese.", unit_price: 1337, merchant_id: @merchant1.id)
+    @item2 = Item.create!(name: "bad cheese", description: "its cheese.", unit_price: 1337, merchant_id: @merchant1.id)
 
     @invoice1 = Invoice.create!(status: "completed", customer_id: @customer1.id)
     @invoice2 = Invoice.create!(status: "completed", customer_id: @customer2.id)
@@ -32,14 +34,16 @@ RSpec.describe Merchant, type: :model do
     @invoice5 = Invoice.create!(status: "completed", customer_id: @customer5.id)
     @invoice6 = Invoice.create!(status: "completed", customer_id: @customer6.id)
     @invoice7 = Invoice.create!(status: "completed", customer_id: @customer6.id)
+    @invoice8 = Invoice.create!(status: "completed", customer_id: @customer8.id)
 
     @invoice_item1 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice1.id, quantity: 5, unit_price: 13635, status: "pending")
-    @invoice_item2 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice2.id, quantity: 9, unit_price: 23324, status: "pending")
+    @invoice_item2 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice2.id, quantity: 9, unit_price: 23324, status: "packaged")
     @invoice_item3 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice3.id, quantity: 9, unit_price: 23324, status: "pending")
     @invoice_item4 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice4.id, quantity: 9, unit_price: 23324, status: "pending")
     @invoice_item5 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice5.id, quantity: 9, unit_price: 23324, status: "pending")
     @invoice_item6 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice6.id, quantity: 9, unit_price: 23324, status: "pending")
     @invoice_item7 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice6.id, quantity: 9, unit_price: 23324, status: "pending")
+    @invoice_item8 = InvoiceItem.create!(item_id: @item2.id, invoice_id: @invoice8.id, quantity: 9, unit_price: 23324, status: "pending")
 
     @transaction1 = Transaction.create!(invoice_id: @invoice1.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: 0)
     @transaction2 = Transaction.create!(invoice_id: @invoice2.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: 1)
@@ -48,6 +52,7 @@ RSpec.describe Merchant, type: :model do
     @transaction5 = Transaction.create!(invoice_id: @invoice5.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: 1)
     @transaction6 = Transaction.create!(invoice_id: @invoice6.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: 1)
     @transaction7 = Transaction.create!(invoice_id: @invoice7.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: 1)
+    @transaction8 = Transaction.create!(invoice_id: @invoice8.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: 1)
 
 end
  describe "#top_5_customers" do
@@ -55,6 +60,13 @@ end
     top_customers = @merchant1.top_5_customers
     expect(top_customers).to eq([@customer6, @customer2, @customer3, @customer4, @customer5])
     expect(top_customers).to_not eq(@customer1)
+  end
+ end
+
+ describe "#items_ready_to_ship" do
+  it "should return only the items that have a status of packaged" do
+    expect(@merchant1.items_ready_to_ship).to eq([@item1])
+    expect(@merchant1.items_ready_to_ship).to_not eq([@item2])
   end
  end
 
