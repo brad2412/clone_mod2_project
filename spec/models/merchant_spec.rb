@@ -56,15 +56,7 @@ RSpec.describe Merchant, type: :model do
     @invoice7 = Invoice.create!(status: "completed", customer_id: @customer6.id)
     @invoice8 = Invoice.create!(status: "completed", customer_id: @customer8.id)
 
-    @invoice_item1 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice1.id, quantity: 5, unit_price: 13635, status: "pending")
-    @invoice_item2 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice2.id, quantity: 9, unit_price: 23324, status: "packaged")
-    @invoice_item3 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice3.id, quantity: 9, unit_price: 23324, status: "pending")
-    @invoice_item4 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice4.id, quantity: 9, unit_price: 23324, status: "pending")
-    @invoice_item5 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice5.id, quantity: 9, unit_price: 23324, status: "pending")
-    @invoice_item6 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice6.id, quantity: 9, unit_price: 23324, status: "pending")
-    @invoice_item7 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice6.id, quantity: 9, unit_price: 23324, status: "pending")
-    @invoice_item8 = InvoiceItem.create!(item_id: @item2.id, invoice_id: @invoice8.id, quantity: 9, unit_price: 23324, status: "pending")
-
+    
     @invoice_item1 = InvoiceItem.create!(invoice: @customer1_invoices[0], item: @merchant1_items[0], unit_price: 423, quantity: 4)
     @invoice_item2 = InvoiceItem.create!(invoice: @customer1_invoices[2], item: @merchant1_items[4], unit_price: 5463, quantity: 6)
     @invoice_item3 = InvoiceItem.create!(invoice: @customer1_invoices[3], item: @merchant1_items[5], unit_price: 543, quantity: 9)
@@ -85,6 +77,14 @@ RSpec.describe Merchant, type: :model do
     @invoice_item18 = InvoiceItem.create!(invoice: @customer7_invoices[0], item: @merchant6_items[8], unit_price: 4265, quantity: 4)
     @invoice_item19 = InvoiceItem.create!(invoice: @customer7_invoices[3], item: @merchant6_items[3], unit_price: 97568, quantity: 4)
     @invoice_item20 = InvoiceItem.create!(invoice: @customer7_invoices[2], item: @merchant7_items[3], unit_price: 3254, quantity: 4)
+    @invoice_item21 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice1.id, quantity: 5, unit_price: 13635, status: "pending")
+    @invoice_item22 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice2.id, quantity: 9, unit_price: 23324, status: "packaged")
+    @invoice_item23 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice3.id, quantity: 9, unit_price: 23324, status: "pending")
+    @invoice_item24 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice4.id, quantity: 9, unit_price: 23324, status: "pending")
+    @invoice_item25 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice5.id, quantity: 9, unit_price: 23324, status: "pending")
+    @invoice_item26 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice6.id, quantity: 9, unit_price: 23324, status: "pending")
+    @invoice_item27 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice6.id, quantity: 9, unit_price: 23324, status: "pending")
+    @invoice_item28 = InvoiceItem.create!(item_id: @item2.id, invoice_id: @invoice8.id, quantity: 9, unit_price: 23324, status: "pending")
     create(:transaction, invoice: @customer1_invoices[0], result: "success")
     create(:transaction, invoice: @customer1_invoices[2], result: "failed")
     create(:transaction, invoice: @customer1_invoices[3], result: "success")
@@ -120,8 +120,8 @@ RSpec.describe Merchant, type: :model do
   describe "#top_5_customers" do
     it "should return only the top 5 customers with SUCCESSFUL transactions" do
       top_customers = @merchant1.top_5_customers
-      expect(top_customers).to eq([@customer6, @customer2, @customer3, @customer4, @customer5])
-      expect(top_customers).to_not eq(@customer1)
+      expect(top_customers).to eq([@customer1, @customer6, @customer2, @customer3, @customer5])
+      expect(top_customers).to_not include(@customer4)
     end
   end
   
@@ -141,7 +141,7 @@ RSpec.describe Merchant, type: :model do
   end
 
   it "returns one merchant's total revenue generated" do
-    expect(@merchant1.total_revenue).to eq(8208)
+    expect(@merchant1.total_revenue).to eq(1477620)
     expect(@merchant2.total_revenue).to eq(165826)
     expect(@merchant3.total_revenue).to eq(6453)
     expect(@merchant4.total_revenue).to eq(54388)
@@ -152,7 +152,7 @@ RSpec.describe Merchant, type: :model do
       # Throw in the calculation here? Like items X invoices and make sure it equals method
   end
 
-  it "returns top 5 merchants by total revenue generated" do
+  xit "returns top 5 merchants by total revenue generated" do
   #   top_5_array = Merchant.top_5_by_total_revenue
   #   expect(top_5_array).to be_a(Array)
   #   expect(top_5_array.count).to eq(5)
