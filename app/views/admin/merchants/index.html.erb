@@ -1,6 +1,17 @@
 <%= link_to "Create New Merchant", new_admin_merchant_path %>
 <h1>Merchants</h1>
 
+<div id="top_five">
+  <h2>Top Five Merchants By Total Revenue</h2>
+  <% Merchant.top_5_by_total_revenue.each do |merchant| %>
+    <section id="merchant-<%= merchant.id %>">
+      <%= link_to merchant.name, admin_merchant_path(merchant) %> - Total Revenue: <%= merchant.formatted_total_revenue %>
+      <br>
+    </section>
+  <% end %>
+</div>
+
+
 <div class="table-container">
   <table class="enabled">
     <caption class="ena">Enabled Merchants</caption>
