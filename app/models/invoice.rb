@@ -4,6 +4,8 @@ class Invoice < ApplicationRecord
   has_many :items, through: :invoice_items
   has_many :transactions
 
+  validates :status, presence: true
+
   enum :status, ["cancelled", "completed", "in progress"]
 
   def self.incomplete_invoices
