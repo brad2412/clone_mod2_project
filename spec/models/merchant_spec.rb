@@ -148,32 +148,29 @@ RSpec.describe Merchant, type: :model do
     expect(@merchant5.total_revenue).to eq(36724)
     expect(@merchant6.total_revenue).to eq(434836)
     expect(@merchant7.total_revenue).to eq(13016)
-      
-      # Throw in the calculation here? Like items X invoices and make sure it equals method
   end
 
-  xit "returns top 5 merchants by total revenue generated" do
-  #   top_5_array = Merchant.top_5_by_total_revenue
-  #   expect(top_5_array).to be_a(Array)
-  #   expect(top_5_array.count).to eq(5)
-  #   expect(top_5_array[0].)
-  # expect 6, 2, 4, 5, 7
+  it "returns formatted total revenue" do
+    expect(@merchant1.formatted_total_revenue).to eq("$14,776.20")
+    expect(@merchant2.formatted_total_revenue).to eq("$1,658.26")
+    expect(@merchant3.formatted_total_revenue).to eq("$64.53")
+    expect(@merchant4.formatted_total_revenue).to eq("$543.88")
+    expect(@merchant5.formatted_total_revenue).to eq("$367.24")
+    expect(@merchant6.formatted_total_revenue).to eq("$4,348.36")
+    expect(@merchant7.formatted_total_revenue).to eq("$130.16")
   end
 
-#   We were playing around with this in my check-ins today so figured I would share it with everyone! Syntax for creating multiple test objects using FactoryBot that share the same trait (i.e. an association).
-# create_list(:name_of_factory, num_of_objects, trait)
-# Example: Creating multiple invoices for a given customer (@customer )
-# invoices_for_customer_1 = create_list(:invoice, 5, customer: @customer)
-# This will create 5 invoices for a customer1
-  # As an admin,
-  # When I visit the admin merchants index (/admin/merchants)
-  # Then I see the names of the top 5 merchants by total revenue generated
-  # And I see that each merchant name links to the admin merchant show page for that merchant
-  # And I see the total revenue generated next to each merchant name
+  it "returns top 5 merchants by total revenue generated" do
+    top_5_array = Merchant.top_5_by_total_revenue
   
+    expect(top_5_array).to eq([@merchant1, @merchant6, @merchant2, @merchant4, @merchant5])
+  end
 
-  # Notes on Revenue Calculation:
-  # - Only invoices with at least one successful transaction should count towards revenue
-  # - Revenue for an invoice should be calculated as the sum of the revenue of all invoice items
-  # - Revenue for an invoice item should be calculated as the invoice item unit price multiplied by the quantity (do not use the item unit price) 
+  it "returns best day for each merchant (most profitable day)" do
+    expect(@merchant1.best_day).to eq("n/a")
+    expect(@merchant6.best_day).to eq("n/a")
+    expect(@merchant2.best_day).to eq("n/a")
+    expect(@merchant4.best_day).to eq("n/a")
+    expect(@merchant5.best_day).to eq("n/a")
+  end
 end
