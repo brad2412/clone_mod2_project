@@ -9,6 +9,6 @@ class Item < ApplicationRecord
 
 
   def all_invoices
-    invoices.all.distinct
+    invoices.order(:created_at).distinct
   end
 end
