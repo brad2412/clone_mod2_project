@@ -61,7 +61,9 @@ class Merchant < ApplicationRecord
       .group('invoices.created_at')
       .order('revenue desc, invoices.created_at desc')
       .limit(1)
-      .first.created_at.strftime("%A, %B %-d, %Y")
+      .first
+      .created_at
+      .strftime("%A, %B %-d, %Y")
   end
 
   # def transactions_count

@@ -64,4 +64,16 @@ RSpec.describe Invoice, type: :model do
     expect(days).to include(date_array[2].to_i)
     expect(date_array[3].length).to eq(4)
   end
+
+  it "calculates total revenue for all items" do
+    expect(@invoice1.total_revenue).to eq(68175)
+    expect(@invoice2.total_revenue).to eq(209916)
+    expect(@invoice6.total_revenue).to eq(419832)
+  end
+
+  it "formats the revenue" do
+    expect(@invoice1.formatted_revenue).to eq("$681.75")
+    expect(@invoice2.formatted_revenue).to eq("$2,099.16")
+    expect(@invoice6.formatted_revenue).to eq("$4,198.32")
+  end
 end

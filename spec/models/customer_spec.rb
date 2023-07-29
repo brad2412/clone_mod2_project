@@ -95,4 +95,14 @@ RSpec.describe Customer, type: :model do
       expect(top_customers).to eq([customer6.id, customer1.id, customer2.id, customer3.id, customer4.id])
     end
   end
+
+  describe "#full_name" do
+    it "returns the first and last name of customer" do
+      customer1 = Customer.create!(first_name: "Bob", last_name: "Smith")
+      customer2 = Customer.create!(first_name: "Jane", last_name: "Smith")
+
+      expect(customer1.full_name).to eq("Bob Smith")
+      expect(customer2.full_name).to eq("Jane Smith")
+    end
+  end
 end
