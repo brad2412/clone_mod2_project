@@ -121,6 +121,7 @@ RSpec.describe Merchant, type: :model do
     it "should return only the top 5 customers with SUCCESSFUL transactions" do
       top_customers = @merchant1.top_5_customers
       expect(top_customers).to eq([@customer1, @customer6, @customer2, @customer3, @customer5])
+      expect(top_customers).to_not eq([@customer1, @customer3, @customer2, @customer6, @customer5])
       expect(top_customers).to_not include(@customer4)
     end
   end

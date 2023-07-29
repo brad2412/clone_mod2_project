@@ -14,22 +14,23 @@ RSpec.describe "items index page", type: :feature do
   describe "merchant items index page" do
     it "should list the names of the merchant items" do
       visit merchant_items_path(@merchant1)
-
+      
       expect(page).to have_content("Your Items")
       expect(page).to have_content("cheese")
       expect(page).to have_content("bad cheese")
       expect(page).to have_content("Bacon")
       expect(page).to_not have_content("Name: Chowda")
     end
-
+    
     it "should show all items as links to thats item's show page" do
-      #expect(page).to have_link("#{@item1.name}")
-      expect(page).to have_link("cheese", href: merchant_item_path(@item1))
-      # expect(page).to have_link("#{@item2.id}")
-      # expect(page).to have_link("#{@item3.id}")
-      # expect(page).to have_link("#{@item4.id}")
+      visit merchant_items_path(@merchant1)
 
-      #click_link ("#{@item1.id}")
+      expect(page).to have_link("#{@item1.name}")
+      expect(page).to have_link("#{@item2.name}")
+      expect(page).to have_link("#{@item3.name}")
+      expect(page).to_not have_link("#{@item4.name}")
+
+      click_link ("#{@item1.name}")
       expect(current_path).to eq(merchant_item_path(@merchant1, @item1))
     end
   end

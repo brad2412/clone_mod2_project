@@ -23,6 +23,7 @@ RSpec.describe Item, type: :model do
       @customer7 = Customer.create!(first_name: "Joseph", last_name: "Smith")
 
       @item1 = Item.create!(name: "cheese", description: "its cheese.", unit_price: 1337, merchant_id: @merchant1.id)
+      @item2 = Item.create!(name: "golden eggs", description: "real gold yo.", unit_price: 38432112, merchant_id: @merchant1.id)
 
       @invoice1 = Invoice.create!(status: "completed", customer_id: @customer1.id)
       @invoice2 = Invoice.create!(status: "completed", customer_id: @customer2.id)
@@ -55,6 +56,14 @@ RSpec.describe Item, type: :model do
       expect(@item1.all_invoices).to eq([@invoice1, @invoice2, @invoice3, @invoice4, @invoice5, @invoice6])
       expect(@item1.all_invoices).to_not eq([@invoice7])
     end
-    
   end
+
+  describe "formatted unit price" do
+    it "should return item price formatted in dollars and cents" do
+      expect(@item1.formatted_unit_price).to eq("$13.37")
+      expect(@item2.formatted_unit_price).to eq("$384,321.12")
+      expect(@item1.formatted_unit_price).to_not eq(1337)
+    end
+  end
+
 end
