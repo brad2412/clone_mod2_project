@@ -40,21 +40,21 @@ RSpec.describe Merchant, type: :model do
     @item2 = Item.create!(name: "bad cheese", description: "its cheese.", unit_price: 1337, merchant_id: @merchant1.id)
 
 
-    @customer1_invoices = create_list(:invoice, 5, customer: @customer1)
-    @customer2_invoices = create_list(:invoice, 5, customer: @customer2)
-    @customer3_invoices = create_list(:invoice, 5, customer: @customer3)
-    @customer4_invoices = create_list(:invoice, 5, customer: @customer4)
-    @customer5_invoices = create_list(:invoice, 5, customer: @customer5)
-    @customer6_invoices = create_list(:invoice, 5, customer: @customer6)
-    @customer7_invoices = create_list(:invoice, 5, customer: @customer7)
-    @invoice1 = Invoice.create!(status: "completed", customer_id: @customer1.id)
-    @invoice2 = Invoice.create!(status: "completed", customer_id: @customer2.id)
-    @invoice3 = Invoice.create!(status: "completed", customer_id: @customer3.id)
-    @invoice4 = Invoice.create!(status: "completed", customer_id: @customer4.id)
-    @invoice5 = Invoice.create!(status: "completed", customer_id: @customer5.id)
-    @invoice6 = Invoice.create!(status: "completed", customer_id: @customer6.id)
-    @invoice7 = Invoice.create!(status: "completed", customer_id: @customer6.id)
-    @invoice8 = Invoice.create!(status: "completed", customer_id: @customer8.id)
+    @customer1_invoices = create_list(:invoice, 5, customer: @customer1, created_at: Time.new(2014,6,5))
+    @customer2_invoices = create_list(:invoice, 5, customer: @customer2, created_at: Time.new(1998,4,7))
+    @customer3_invoices = create_list(:invoice, 5, customer: @customer3, created_at: Time.new(1900,7,6))
+    @customer4_invoices = create_list(:invoice, 5, customer: @customer4, created_at: Time.new(1997,7,6))
+    @customer5_invoices = create_list(:invoice, 5, customer: @customer5, created_at: Time.new(1987,5,4))
+    @customer6_invoices = create_list(:invoice, 5, customer: @customer6, created_at: Time.new(2001,6,5))
+    @customer7_invoices = create_list(:invoice, 5, customer: @customer7, created_at: Time.new(2003,7,6))
+    @invoice1 = Invoice.create!(status: "completed", customer_id: @customer1.id, created_at: Time.new(2011,4,5))
+    @invoice2 = Invoice.create!(status: "completed", customer_id: @customer2.id, created_at: Time.new(2012,3,4))
+    @invoice3 = Invoice.create!(status: "completed", customer_id: @customer3.id, created_at: Time.new(2000,5,6))
+    @invoice4 = Invoice.create!(status: "completed", customer_id: @customer4.id, created_at: Time.new(1999,5,6))
+    @invoice5 = Invoice.create!(status: "completed", customer_id: @customer5.id, created_at: Time.new(2030,5,4))
+    @invoice6 = Invoice.create!(status: "completed", customer_id: @customer6.id, created_at: Time.new(2012,5,4))
+    @invoice7 = Invoice.create!(status: "completed", customer_id: @customer6.id, created_at: Time.new(2016,7,6))
+    @invoice8 = Invoice.create!(status: "completed", customer_id: @customer8.id, created_at: Time.new(2015,5,3))
 
     
     @invoice_item1 = InvoiceItem.create!(invoice: @customer1_invoices[0], item: @merchant1_items[0], unit_price: 423, quantity: 4)
@@ -167,10 +167,12 @@ RSpec.describe Merchant, type: :model do
   end
 
   it "returns best day for each merchant (most profitable day)" do
-    expect(@merchant1.best_day).to eq("n/a")
-    expect(@merchant6.best_day).to eq("n/a")
-    expect(@merchant2.best_day).to eq("n/a")
-    expect(@merchant4.best_day).to eq("n/a")
-    expect(@merchant5.best_day).to eq("n/a")
+    expect(@merchant1.best_day).to eq("Friday, May 4, 2012")
+    expect(@merchant2.best_day).to eq("Tuesday, April 7, 1998")
+    expect(@merchant3.best_day).to eq("Friday, July 6, 1900")
+    expect(@merchant4.best_day).to eq("Friday, July 6, 1900")
+    expect(@merchant5.best_day).to eq("Monday, May 4, 1987")
+    expect(@merchant6.best_day).to eq("Sunday, July 6, 2003")
+    expect(@merchant7.best_day).to eq("Sunday, July 6, 2003")
   end
 end
