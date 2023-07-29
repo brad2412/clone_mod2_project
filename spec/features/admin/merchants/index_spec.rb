@@ -1,17 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Merchant, type: :model do
-  describe "validations" do
-    it { should validate_presence_of :name }
-  end
-
-  describe "relationships" do
-    it { should have_many :items }
-    it { should have_many(:invoices).through(:items) }
-    it { should have_many(:transactions).through(:invoices) }
-    it { should have_many(:customers).through(:invoices) }
-  end
-
+RSpec.describe "Admin Merchants Index Page" do
   before(:each) do
     @merchant1 = Merchant.create!(name: "Dangerway", enabled: true)
     @merchant2 = Merchant.create!(name: "Targete", enabled: true)
@@ -20,6 +9,7 @@ RSpec.describe Merchant, type: :model do
     @merchant5 = Merchant.create!(name: "Freddy Meyers", enabled: false)
     @merchant6 = Merchant.create!(name: "Timmy Hortons", enabled: false)
     @merchant7 = Merchant.create!(name: "ZaZa", enabled: false)
+
     @merchant1_items = create_list(:item, 10, merchant: @merchant1)
     @merchant2_items = create_list(:item, 10, merchant: @merchant2)
     @merchant3_items = create_list(:item, 10, merchant: @merchant3)
@@ -27,6 +17,7 @@ RSpec.describe Merchant, type: :model do
     @merchant5_items = create_list(:item, 10, merchant: @merchant5)
     @merchant6_items = create_list(:item, 10, merchant: @merchant6)
     @merchant7_items = create_list(:item, 10, merchant: @merchant7)
+
     @customer1 = Customer.create!(first_name: "Bob", last_name: "Smith")
     @customer2 = Customer.create!(first_name: "Jane", last_name: "Smith")
     @customer3 = Customer.create!(first_name: "John", last_name: "Smith")
@@ -35,10 +26,6 @@ RSpec.describe Merchant, type: :model do
     @customer6 = Customer.create!(first_name: "Johnny", last_name: "Smith")
     @customer7 = Customer.create!(first_name: "Joseph", last_name: "Smith")
     @customer8 = Customer.create!(first_name: "Smelly", last_name: "Cow")
-
-    @item1 = Item.create!(name: "cheese", description: "its cheese.", unit_price: 1337, merchant_id: @merchant1.id)
-    @item2 = Item.create!(name: "bad cheese", description: "its cheese.", unit_price: 1337, merchant_id: @merchant1.id)
-
 
     @customer1_invoices = create_list(:invoice, 5, customer: @customer1, created_at: Time.new(2014,6,5))
     @customer2_invoices = create_list(:invoice, 5, customer: @customer2, created_at: Time.new(1998,4,7))
@@ -56,7 +43,9 @@ RSpec.describe Merchant, type: :model do
     @invoice7 = Invoice.create!(status: "completed", customer_id: @customer6.id, created_at: Time.new(2016,7,6))
     @invoice8 = Invoice.create!(status: "completed", customer_id: @customer8.id, created_at: Time.new(2015,5,3))
 
-    
+
+
+
     @invoice_item1 = InvoiceItem.create!(invoice: @customer1_invoices[0], item: @merchant1_items[0], unit_price: 423, quantity: 4)
     @invoice_item2 = InvoiceItem.create!(invoice: @customer1_invoices[2], item: @merchant1_items[4], unit_price: 5463, quantity: 6)
     @invoice_item3 = InvoiceItem.create!(invoice: @customer1_invoices[3], item: @merchant1_items[5], unit_price: 543, quantity: 9)
@@ -77,14 +66,6 @@ RSpec.describe Merchant, type: :model do
     @invoice_item18 = InvoiceItem.create!(invoice: @customer7_invoices[0], item: @merchant6_items[8], unit_price: 4265, quantity: 4)
     @invoice_item19 = InvoiceItem.create!(invoice: @customer7_invoices[3], item: @merchant6_items[3], unit_price: 97568, quantity: 4)
     @invoice_item20 = InvoiceItem.create!(invoice: @customer7_invoices[2], item: @merchant7_items[3], unit_price: 3254, quantity: 4)
-    @invoice_item21 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice1.id, quantity: 5, unit_price: 13635, status: "pending")
-    @invoice_item22 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice2.id, quantity: 9, unit_price: 23324, status: "packaged")
-    @invoice_item23 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice3.id, quantity: 9, unit_price: 23324, status: "pending")
-    @invoice_item24 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice4.id, quantity: 9, unit_price: 23324, status: "pending")
-    @invoice_item25 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice5.id, quantity: 9, unit_price: 23324, status: "pending")
-    @invoice_item26 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice6.id, quantity: 9, unit_price: 23324, status: "pending")
-    @invoice_item27 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice6.id, quantity: 9, unit_price: 23324, status: "pending")
-    @invoice_item28 = InvoiceItem.create!(item_id: @item2.id, invoice_id: @invoice8.id, quantity: 9, unit_price: 23324, status: "pending")
     create(:transaction, invoice: @customer1_invoices[0], result: "success")
     create(:transaction, invoice: @customer1_invoices[2], result: "failed")
     create(:transaction, invoice: @customer1_invoices[3], result: "success")
@@ -106,73 +87,170 @@ RSpec.describe Merchant, type: :model do
     create(:transaction, invoice: @customer7_invoices[3], result: "success")
     create(:transaction, invoice: @customer7_invoices[2], result: "failed")
     create(:transaction, invoice: @customer7_invoices[2], result: "success")
-
-    @transaction1 = Transaction.create!(invoice_id: @invoice1.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: 0)
-    @transaction2 = Transaction.create!(invoice_id: @invoice2.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: 1)
-    @transaction3 = Transaction.create!(invoice_id: @invoice3.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: 1)
-    @transaction4 = Transaction.create!(invoice_id: @invoice4.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: 1)
-    @transaction5 = Transaction.create!(invoice_id: @invoice5.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: 1)
-    @transaction6 = Transaction.create!(invoice_id: @invoice6.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: 1)
-    @transaction7 = Transaction.create!(invoice_id: @invoice7.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: 1)
-    @transaction8 = Transaction.create!(invoice_id: @invoice8.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: 1)
   end
 
-  describe "#top_5_customers" do
-    it "should return only the top 5 customers with SUCCESSFUL transactions" do
-      top_customers = @merchant1.top_5_customers
-      expect(top_customers).to eq([@customer1, @customer6, @customer2, @customer3, @customer5])
-      expect(top_customers).to_not include(@customer4)
+  # User Story 24
+  it "shows the name of each merchant in the system" do
+    visit admin_merchants_path
+    # save_and_open_page
+    expect(page).to have_content("Merchants")
+    expect(page).to have_link("Dangerway", href: admin_merchant_path(@merchant1))
+    expect(page).to have_link("Targete", href: admin_merchant_path(@merchant2))
+    expect(page).to have_link("Fifteen Bears", href: admin_merchant_path(@merchant3))
+    expect(page).to have_link("Queen Soopers", href: admin_merchant_path(@merchant4))
+    expect(page).to have_link("Freddy Meyers", href: admin_merchant_path(@merchant5))
+    expect(page).to have_link("Timmy Hortons", href: admin_merchant_path(@merchant6))
+  end
+
+  # User story 27
+  it "has buttons to disable or enable each merchant" do
+    visit admin_merchants_path
+    within("tr#em-#{@merchant1.id}") do
+      expect(page).to have_content("Enabled")
+      expect(page).to_not have_content("Disabled")
+      expect(page).to have_button("Disable Merchant")
+    end
+
+    within("tr#em-#{@merchant2.id}") do
+      expect(page).to have_content("Enabled")
+      expect(page).to_not have_content("Disabled")
+      expect(page).to have_button("Disable Merchant")
+    end
+
+    within("tr#em-#{@merchant3.id}") do
+      expect(page).to have_content("Enabled")
+      expect(page).to_not have_content("Disabled")
+      expect(page).to have_button("Disable Merchant")
+    end
+
+    within("tr#em-#{@merchant4.id}") do
+      expect(page).to have_content("Enabled")
+      expect(page).to_not have_content("Disabled")
+      expect(page).to have_button("Disable Merchant")
+    end
+
+    within("tr#dm-#{@merchant5.id}") do
+      expect(page).to have_content("Disabled")
+      expect(page).to_not have_content("Enabled")
+      expect(page).to have_button("Enable Merchant")
+    end
+
+    within("tr#dm-#{@merchant6.id}") do
+      expect(page).to have_content("Disabled")
+      expect(page).to_not have_content("Enabled")
+      expect(page).to have_button("Enable Merchant")
     end
   end
-  
-  describe "#items_ready_to_ship" do
-    it "should return only the items that have a status of packaged" do
-      expect(@merchant1.items_ready_to_ship).to eq([@item1])
-      expect(@merchant1.items_ready_to_ship).to_not eq([@item2])
+
+  # User story 27 continued/story 28
+  it "can enable or disable merchants" do
+    visit admin_merchants_path
+    # save_and_open_page
+    within(".table-container") do
+      within(".enabled") do
+        expect(page).to have_content("Enabled Merchants")
+        expect(page).to have_content("Dangerway")
+        expect(page).to have_content("Targete")
+        expect(page).to have_content("Fifteen Bears")
+        expect(page).to have_content("Queen Soopers")
+      end
+      
+      within(".disabled") do
+        expect(page).to have_content("Disabled Merchants")
+        expect(page).to have_content("Freddy Meyers")
+        expect(page).to have_content("Timmy Hortons")
+      end
+    end
+
+    within("tr#em-#{@merchant1.id}") do
+      click_button("Disable Merchant")
+    end
+
+    within("tr#dm-#{@merchant5.id}") do
+      click_button("Enable Merchant")
+    end
+    # save_and_open_page
+    within(".enabled") do
+      expect(page).to_not have_content("Dangerway")
+      expect(page).to have_content("Targete")
+      expect(page).to have_content("Fifteen Bears")
+      expect(page).to have_content("Queen Soopers")
+      expect(page).to have_content("Freddy Meyers")
+    end
+
+    within(".disabled") do
+      expect(page).to_not have_content("Freddy Meyers")
+      expect(page).to have_content("Timmy Hortons")
+      expect(page).to have_content("Dangerway")
     end
   end
 
-  it "returns all enabled merchants" do
-    expect(Merchant.enabled).to eq([@merchant1, @merchant2, @merchant3, @merchant4])
+  #User story 30
+  it "has a section for top five merchants by total revenue" do
+    visit admin_merchants_path
+    
+    expect(page).to have_content("Top Five Merchants By Total Revenue")
+
+    within("#top_five") do
+      within("#merchant-#{@merchant6.id}") do
+        expect(page).to have_link("#{@merchant6.name}", href: admin_merchant_path(@merchant6))
+        expect(page).to have_content("Total Revenue: #{@merchant6.formatted_total_revenue}")
+      end
+
+      within("#merchant-#{@merchant2.id}") do
+        expect(page).to have_link("#{@merchant2.name}", href: admin_merchant_path(@merchant2))
+        expect(page).to have_content("Total Revenue: #{@merchant2.formatted_total_revenue}")
+      end
+
+      within("#merchant-#{@merchant4.id}") do
+        expect(page).to have_link("#{@merchant4.name}", href: admin_merchant_path(@merchant4))
+        expect(page).to have_content("Total Revenue: #{@merchant4.formatted_total_revenue}")
+      end 
+
+      within("#merchant-#{@merchant5.id}") do
+        expect(page).to have_link("#{@merchant5.name}", href: admin_merchant_path(@merchant5))
+        expect(page).to have_content("Total Revenue: #{@merchant5.formatted_total_revenue}")
+      end
+      
+      within("#merchant-#{@merchant7.id}") do
+        expect(page).to have_link("#{@merchant7.name}", href: admin_merchant_path(@merchant7))
+        expect(page).to have_content("Total Revenue: #{@merchant7.formatted_total_revenue}")
+      end
+
+      expect(@merchant6.name).to appear_before(@merchant2.name)
+      expect(@merchant2.name).to appear_before(@merchant4.name)
+      expect(@merchant4.name).to appear_before(@merchant5.name)
+      expect(@merchant5.name).to appear_before(@merchant7.name)
+    end
   end
 
-  it "returns all disabled merchants" do
-    expect(Merchant.disabled).to eq([@merchant5, @merchant6, @merchant7])
-  end
+  #User story 31
+  it "lists the most profitable date for each of top five merchants" do
+    visit admin_merchants_path
+    
+    expect(page).to have_content("Top Five Merchants By Total Revenue")
 
-  it "returns one merchant's total revenue generated" do
-    expect(@merchant1.total_revenue).to eq(1477620)
-    expect(@merchant2.total_revenue).to eq(165826)
-    expect(@merchant3.total_revenue).to eq(6453)
-    expect(@merchant4.total_revenue).to eq(54388)
-    expect(@merchant5.total_revenue).to eq(36724)
-    expect(@merchant6.total_revenue).to eq(434836)
-    expect(@merchant7.total_revenue).to eq(13016)
-  end
-
-  it "returns formatted total revenue" do
-    expect(@merchant1.formatted_total_revenue).to eq("$14,776.20")
-    expect(@merchant2.formatted_total_revenue).to eq("$1,658.26")
-    expect(@merchant3.formatted_total_revenue).to eq("$64.53")
-    expect(@merchant4.formatted_total_revenue).to eq("$543.88")
-    expect(@merchant5.formatted_total_revenue).to eq("$367.24")
-    expect(@merchant6.formatted_total_revenue).to eq("$4,348.36")
-    expect(@merchant7.formatted_total_revenue).to eq("$130.16")
-  end
-
-  it "returns top 5 merchants by total revenue generated" do
-    top_5_array = Merchant.top_5_by_total_revenue
-  
-    expect(top_5_array).to eq([@merchant1, @merchant6, @merchant2, @merchant4, @merchant5])
-  end
-
-  it "returns best day for each merchant (most profitable day)" do
-    expect(@merchant1.best_day).to eq("Friday, May 4, 2012")
-    expect(@merchant2.best_day).to eq("Tuesday, April 7, 1998")
-    expect(@merchant3.best_day).to eq("Friday, July 6, 1900")
-    expect(@merchant4.best_day).to eq("Friday, July 6, 1900")
-    expect(@merchant5.best_day).to eq("Monday, May 4, 1987")
-    expect(@merchant6.best_day).to eq("Sunday, July 6, 2003")
-    expect(@merchant7.best_day).to eq("Sunday, July 6, 2003")
+    within("#top_five") do
+      within("#merchant-#{@merchant6.id}") do
+        expect(page).to have_content("Top selling date for #{@merchant6.name} was #{@merchant6.best_day}")
+      end
+      
+      within("#merchant-#{@merchant2.id}") do
+        expect(page).to have_content("Top selling date for #{@merchant2.name} was #{@merchant2.best_day}")
+      end
+      
+      within("#merchant-#{@merchant4.id}") do
+        expect(page).to have_content("Top selling date for #{@merchant4.name} was #{@merchant4.best_day}")
+      end 
+      
+      within("#merchant-#{@merchant5.id}") do
+        expect(page).to have_content("Top selling date for #{@merchant5.name} was #{@merchant5.best_day}")
+      end
+      
+      within("#merchant-#{@merchant7.id}") do
+        expect(page).to have_content("Top selling date for #{@merchant7.name} was #{@merchant7.best_day}")
+      end
+    end
   end
 end
+

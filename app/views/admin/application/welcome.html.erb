@@ -5,13 +5,13 @@
   <p><%= customer.first_name%> <%= customer.last_name %>: <%= customer.total_transactions %> transactions</p>
 <% end %>
 
-<%= link_to "Invoices", "/admin/invoices" %>
-<%= link_to "Merchants", "/admin/merchants" %>
+<%= link_to "Invoices", admin_invoices_path %>
+<%= link_to "Merchants", admin_merchants_path %>
 
 <h2>Incomplete Invoices</h2>
 <% @incomplete_invoices.each do |invoice| %>
   <div id="invoice-<%= invoice.id %>">
-    <%= link_to "Invoice ##{invoice.id}", "/admin/invoices/#{invoice.id}" %><br>
+    <%= link_to "Invoice ##{invoice.id}", admin_invoices_path(invoice) %><br>
     <%= invoice.formatted_date %>
   </div>
 <% end %>

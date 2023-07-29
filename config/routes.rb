@@ -12,4 +12,9 @@ Rails.application.routes.draw do
   # get "/merchants/:id/invoices/:id", to: "merchants/invoices#show"
 
   get "/admin", to: "admin/application#welcome"
+
+  namespace :admin do
+    resources :merchants, except: [:destroy]
+    resources :invoices, only: [:index, :show]
+  end
 end
