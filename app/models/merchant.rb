@@ -63,4 +63,8 @@ class Merchant < ApplicationRecord
       .limit(1)
       .first.created_at.strftime("%A, %B %-d, %Y")
   end
+
+  # def transactions_count
+  #   transactions.where(result: "success").count
+  # end
 end
