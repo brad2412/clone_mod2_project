@@ -27,13 +27,24 @@ RSpec.describe "Admin Merchants Index Page" do
     @customer7 = Customer.create!(first_name: "Joseph", last_name: "Smith")
     @customer8 = Customer.create!(first_name: "Smelly", last_name: "Cow")
 
-    @customer1_invoices = create_list(:invoice, 5, customer: @customer1)
-    @customer2_invoices = create_list(:invoice, 5, customer: @customer2)
-    @customer3_invoices = create_list(:invoice, 5, customer: @customer3)
-    @customer4_invoices = create_list(:invoice, 5, customer: @customer4)
-    @customer5_invoices = create_list(:invoice, 5, customer: @customer5)
-    @customer6_invoices = create_list(:invoice, 5, customer: @customer6)
-    @customer7_invoices = create_list(:invoice, 5, customer: @customer7)
+    @customer1_invoices = create_list(:invoice, 5, customer: @customer1, created_at: Time.new(2014,6,5))
+    @customer2_invoices = create_list(:invoice, 5, customer: @customer2, created_at: Time.new(1998,4,7))
+    @customer3_invoices = create_list(:invoice, 5, customer: @customer3, created_at: Time.new(1900,7,6))
+    @customer4_invoices = create_list(:invoice, 5, customer: @customer4, created_at: Time.new(1997,7,6))
+    @customer5_invoices = create_list(:invoice, 5, customer: @customer5, created_at: Time.new(1987,5,4))
+    @customer6_invoices = create_list(:invoice, 5, customer: @customer6, created_at: Time.new(2001,6,5))
+    @customer7_invoices = create_list(:invoice, 5, customer: @customer7, created_at: Time.new(2003,7,6))
+    @invoice1 = Invoice.create!(status: "completed", customer_id: @customer1.id, created_at: Time.new(2011,4,5))
+    @invoice2 = Invoice.create!(status: "completed", customer_id: @customer2.id, created_at: Time.new(2012,3,4))
+    @invoice3 = Invoice.create!(status: "completed", customer_id: @customer3.id, created_at: Time.new(2000,5,6))
+    @invoice4 = Invoice.create!(status: "completed", customer_id: @customer4.id, created_at: Time.new(1999,5,6))
+    @invoice5 = Invoice.create!(status: "completed", customer_id: @customer5.id, created_at: Time.new(2030,5,4))
+    @invoice6 = Invoice.create!(status: "completed", customer_id: @customer6.id, created_at: Time.new(2012,5,4))
+    @invoice7 = Invoice.create!(status: "completed", customer_id: @customer6.id, created_at: Time.new(2016,7,6))
+    @invoice8 = Invoice.create!(status: "completed", customer_id: @customer8.id, created_at: Time.new(2015,5,3))
+
+
+
 
     @invoice_item1 = InvoiceItem.create!(invoice: @customer1_invoices[0], item: @merchant1_items[0], unit_price: 423, quantity: 4)
     @invoice_item2 = InvoiceItem.create!(invoice: @customer1_invoices[2], item: @merchant1_items[4], unit_price: 5463, quantity: 6)
@@ -241,15 +252,5 @@ RSpec.describe "Admin Merchants Index Page" do
       end
     end
   end
-
-
-#   31. Admin Merchants: Top Merchant's Best Day
-
-# As an admin,
-# When I visit the admin merchants index
-# Then next to each of the 5 merchants by revenue I see the date with the most revenue for each merchant.
-# And I see a label “Top selling date for <merchant name> was <date with most sales>"
-
-# Note: use the invoice date. If there are multiple days with equal number of sales, return the most recent day.
 end
 
