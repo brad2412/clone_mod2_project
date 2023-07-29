@@ -92,7 +92,7 @@ RSpec.describe "merchant dashboard", type: :feature do
     describe "items_ready_to_ship" do
       it "should show item names that have been ordered but not shipped with invoice id" do
         visit merchant_path(@merchant1)
-        save_and_open_page
+        # save_and_open_page
         expect(page).to have_content("Items Ready To Ship")
         # save_and_open_page
         within '#items_ready_to_ship' do
@@ -100,11 +100,11 @@ RSpec.describe "merchant dashboard", type: :feature do
           expect(page).to have_content("Item Name: #{@item3.name}")
           expect(page).to have_content("Invoice Date: #{@invoice2.formatted_date}")
           expect(page).to have_content("Invoice Date: #{@invoice9.formatted_date}")
-          expect(page).to have_link(@invoice2.id)
-          expect(page).to have_link(@invoice9.id)
+          expect(page).to have_link("#{@invoice2.id}")
+          expect(page).to have_link("#{@invoice9.id}")
           expect(@invoice2.formatted_date).to appear_before(@invoice9.formatted_date)
 
-          click_link(@invoice2.id)
+          click_link("#{@invoice2.id}")
 
           expect(current_path).to eq("/merchants/#{@merchant1.id}/invoices/#{@invoice2.id}")
           
