@@ -27,12 +27,12 @@ RSpec.describe InvoiceItem, type: :model do
       
       @invoice_item1 = InvoiceItem.create!(invoice: @invoice1, item: @item1, quantity: 5, unit_price: 3476, status: "pending")
       @invoice_item2 = InvoiceItem.create!(invoice: @invoice1, item: @item2, quantity: 4, unit_price: 802, status: "packaged")
-      @invoice_item3 = InvoiceItem.create!(invoice: @invoice1, item: @item3, quantity: 465, unit_price: 754, status: "shipped")
+      @invoice_item3 = InvoiceItem.create!(invoice: @invoice1, item: @item3, quantity: 465, unit_price: 34568765, status: "shipped")
       @invoice_item4 = InvoiceItem.create!(invoice: @invoice1, item: @item4, quantity: 23, unit_price: 1509, status: "shipped")
 
       expect(@invoice_item1.formatted_price).to eq("$34.76")
       expect(@invoice_item2.formatted_price).to eq("$8.02")
-      expect(@invoice_item3.formatted_price).to eq("$7.54")
+      expect(@invoice_item3.formatted_price).to eq("$345,687.65")
       expect(@invoice_item4.formatted_price).to eq("$15.09")
     end
   end
