@@ -59,6 +59,8 @@ class Merchant < ApplicationRecord
       .group('invoices.created_at')
       .order('revenue desc, invoices.created_at desc')
       .limit(1)
-      .first.created_at.strftime("%A, %B %-d, %Y")
+      .pluck(:created_at)
+      .first
+      .strftime("%A, %B %-d, %Y")
   end
 end
