@@ -80,11 +80,11 @@ RSpec.describe "merchant dashboard", type: :feature do
 
         within "#top_5_customers" do
 
-          expect(page).to have_content("#{@customer6.first_name} #{@customer6.last_name} Successful Transactions: #{@customer6.total_transactions}")
-          expect(page).to have_content("#{@customer8.first_name} #{@customer8.last_name} Successful Transactions: #{@customer8.total_transactions}")
-          expect(page).to have_content("#{@customer2.first_name} #{@customer2.last_name} Successful Transactions: #{@customer2.total_transactions}")
-          expect(page).to have_content("#{@customer3.first_name} #{@customer3.last_name} Successful Transactions: #{@customer3.total_transactions}")
-          expect(page).to have_content("#{@customer4.first_name} #{@customer4.last_name} Successful Transactions: #{@customer4.total_transactions}")
+          expect(page).to have_content("Johnny Smith Successful Transactions: 4")
+          expect(page).to have_content("Smelly Cow Successful Transactions: 4")
+          expect(page).to have_content("Jane Smith Successful Transactions: 1")
+          expect(page).to have_content("John Smith Successful Transactions: 1")
+          expect(page).to have_content("Janet Smith Successful Transactions: 1")
         end
       end
     end
@@ -92,19 +92,20 @@ RSpec.describe "merchant dashboard", type: :feature do
     describe "items_ready_to_ship" do
       it "should show item names that have been ordered but not shipped with invoice id" do
         visit merchant_path(@merchant1)
-        save_and_open_page
+        # save_and_open_page
         expect(page).to have_content("Items Ready To Ship")
-
+        # save_and_open_page
         within '#items_ready_to_ship' do
           expect(page).to have_content("Item Name: #{@item1.name}")
           expect(page).to have_content("Item Name: #{@item3.name}")
           expect(page).to have_content("Invoice Date: #{@invoice2.formatted_date}")
           expect(page).to have_content("Invoice Date: #{@invoice9.formatted_date}")
-          expect(page).to have_link(@invoice2.id)
-          expect(page).to have_link(@invoice9.id)
+          expect(page).to have_link("#{@invoice2.id}")
+          expect(page).to have_link("#{@invoice9.id}")
           expect(@invoice2.formatted_date).to appear_before(@invoice9.formatted_date)
 
-          click_link(@invoice2.id)
+          click_link("#{@invoice2.id}")
+
           expect(current_path).to eq("/merchants/#{@merchant1.id}/invoices/#{@invoice2.id}")
           
         end

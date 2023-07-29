@@ -1,0 +1,37 @@
+/* merchants.css */
+
+/* Style for the container that holds both tables */
+.table-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+/* Style for each table */
+table {
+  width: 45%; /* Adjust the width as needed */
+}
+
+th, td {
+  padding: 4px;
+  text-align: left;
+}
+
+/* Style for the "Enabled Merchants" section header */
+caption.ena {
+  color: rgb(1, 150, 36);
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+/* Style for the "Disabled Merchants" section header */
+caption.dis {
+  color: rgb(234, 10, 10);
+  font-size: 1.2rem;
+  margin-bottom: 8px
+}
+
+/* Style for the header */
+h1 {
+  text-align: center;
+}

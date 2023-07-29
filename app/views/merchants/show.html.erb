@@ -8,7 +8,7 @@
 <div id="top_5_customers">
   <h4>Top 5 Customers</h4>
   <% @merchant.top_5_customers.each do |customer| %>
-  <p><%= customer.first_name %> <%= customer.last_name %> Successful Transactions: <%= customer.total_transactions %></p>
+  <p><%= customer.first_name %> <%= customer.last_name %> Successful Transactions: <%= customer.success_transacts %></p>
   <% end %>
 
 </div>
@@ -22,5 +22,4 @@
       <li> Invoice Date: <%= "#{invoice.formatted_date}" %> Link: <%= link_to "#{invoice.id}", merchant_invoice_path(@merchant, invoice)  %></li>
       <% end %>
     <% end %>
-
 </div>

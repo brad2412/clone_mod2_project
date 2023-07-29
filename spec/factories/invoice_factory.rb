@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :invoice do
-    status { "completed"}
+    status { Faker::Number.within(range: 0..2) }
     association :customer
-    association :invoice_item
   end
 end
