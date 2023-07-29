@@ -6,6 +6,7 @@
   <% Merchant.top_5_by_total_revenue.each do |merchant| %>
     <section id="merchant-<%= merchant.id %>">
       <%= link_to merchant.name, admin_merchant_path(merchant) %> - Total Revenue: <%= merchant.formatted_total_revenue %>
+      <p>Top selling date for <%= merchant.name %> was <%= merchant.best_day %></p>
       <br>
     </section>
   <% end %>
