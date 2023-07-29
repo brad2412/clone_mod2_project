@@ -1,6 +1,7 @@
 class Customer < ApplicationRecord
   has_many :invoices
   has_many :transactions, through: :invoices
+  has_many :merchants, through: :invoices
 
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -17,5 +18,4 @@ class Customer < ApplicationRecord
   def total_transactions
     transactions.where(result: "success").count
   end
-
 end

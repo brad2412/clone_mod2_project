@@ -12,7 +12,7 @@ RSpec.describe Customer, type: :model do
   end
 
   describe "#total_transactions" do
-    xit "counts total transactions by customer" do
+    it "counts total transactions by customer" do
       customer1 = Customer.create!(first_name: "Bob", last_name: "Smith")
       customer2 = Customer.create!(first_name: "Jane", last_name: "Smith")
       customer3 = Customer.create!(first_name: "John", last_name: "Smith")
