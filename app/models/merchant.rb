@@ -17,4 +17,8 @@ class Merchant < ApplicationRecord
   def items_ready_to_ship
     Item.joins(:invoice_items).where(invoice_items: { status: "packaged" })
   end
+
+  # def transactions_count
+  #   transactions.where(result: "success").count
+  # end
 end

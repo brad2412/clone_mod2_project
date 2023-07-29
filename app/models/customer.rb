@@ -15,7 +15,7 @@ class Customer < ApplicationRecord
   end
   
   def total_transactions
-    transactions.where(result: "success").count
+    transactions.where( result: "success").count
   end
 
 end
