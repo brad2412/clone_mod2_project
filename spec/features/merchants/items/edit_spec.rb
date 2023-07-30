@@ -15,21 +15,21 @@ RSpec.describe "items edit page", type: :feature do
     it "existing item attribue info with an option to edit" do
       visit edit_merchant_item_path(@merchant1, @item1)
 
-      expect(page).to have_content("Update Name: cheese")
+      expect(page).to have_content("Name: cheese")
       expect(page).to have_content("Description: its cheese.")
       expect(page).to have_content("Current Selling Price: $13.37")
 
-      expect(page).to_not have_content("Update Name: bad cheese")
+      expect(page).to_not have_content("Name: bad cheese")
 
       expect(page).to have_field("Name", with: "cheese")
       fill_in("Name", with: "cheeese")
       expect(page).to have_field("Description", with: "its cheese.")
-      expect(page).to have_field("Unit Price", with: "$13.37")
+      expect(page).to have_field("Unit price", with: "1337")
       click_button "Submit"
 
       expect(current_path).to eq(merchant_item_path(@merchant1, @item1))
-      expect(page).to have_content("cheeese")
-      expect(page).to_not have_content("cheese")
+      expect(page).to have_content("Name: cheeese")
+      expect(page).to_not have_content("Name: cheese")
     end
   end
 end
