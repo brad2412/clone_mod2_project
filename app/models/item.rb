@@ -5,7 +5,7 @@ class Item < ApplicationRecord
   has_many :transactions, through: :invoices
 
   validates :name, presence: true
-  validates :unit_price, presence: true, numericality: { greater_then_or_equal_to: 0}
+  validates :unit_price, presence: true, numericality: { greater_than_or_equal_to: 0}
 
 
   def all_invoices
