@@ -36,8 +36,8 @@ class Merchant < ApplicationRecord
       .sum('invoice_items.quantity*invoice_items.unit_price')
   end
 
-  def formatted_total_revenue
-    revenue = total_revenue/100.to_f
+  def formatted_total_revenue  # this method is repeated in item, invoice, and invoice_item possible rename and move to application_record?
+    revenue = total_revenue/100.00
     formatted_amount = sprintf("$%.2f", revenue)
     if formatted_amount.length > 7
       formatted_amount = formatted_amount.gsub!(/(\d)(?=(\d{3})+(?!\d))/, "\\1,")
@@ -46,11 +46,11 @@ class Merchant < ApplicationRecord
   end
 
   def self.top_5_by_total_revenue
-    select("merchants.*, sum(invoice_items.quantity*invoice_items.unit_price) as total_revenue")
+    select("merchants.*, sum(invoice_items.quantity*invoice_items.unit_price) as revenue")
       .joins(:transactions)
       .where(transactions: {result: "success"})
       .group(:id)
-      .order('total_revenue desc')
+      .order('revenue desc')
       .limit(5)
   end
 
@@ -66,7 +66,4 @@ class Merchant < ApplicationRecord
       .strftime("%A, %B %-d, %Y")
   end
 
-  # def transactions_count
-  #   transactions.where(result: "success").count
-  # end
 end
