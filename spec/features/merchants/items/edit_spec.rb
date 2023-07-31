@@ -25,6 +25,7 @@ RSpec.describe "items edit page", type: :feature do
       fill_in("Name", with: "cheeese")
       expect(page).to have_field("Description", with: "its cheese.")
       expect(page).to have_field("Unit price", with: "1337")
+  
       click_button "Submit"
 
       expect(current_path).to eq(merchant_item_path(@merchant1, @item1))
