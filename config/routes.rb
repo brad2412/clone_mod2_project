@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   resources :merchants, only: [:show] do
-    resources :items, only: [:index, :show, :edit, :update], controller: "merchants/items"
+    resources :items, only: [:index, :show, :edit, :update, :new, :create], controller: "merchants/items"
     resources :invoices, only: [:index, :show], controller: "merchants/invoices"
   end
   get "/merchants/:id/dashboard", to: "merchants#show"

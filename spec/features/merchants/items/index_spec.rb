@@ -93,6 +93,16 @@ RSpec.describe "items index page", type: :feature do
         expect(page).to have_content("bad cheese")
       end
     end
+
+    it "displays a link to create a new item that takes me to a form for item creation" do
+      visit merchant_items_path(@merchant1)
+
+      expect(page).to have_link("New Item")
+
+      click_link("New Item")
+
+      expect(current_path).to eq(new_merchant_item_path(@merchant1, @item))
+    end
   end
 
 end

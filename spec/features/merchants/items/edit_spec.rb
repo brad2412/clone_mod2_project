@@ -32,5 +32,17 @@ RSpec.describe "items edit page", type: :feature do
       expect(page).to have_content("Name: cheeese")
       expect(page).to_not have_content("Name: cheese")
     end
+
+    it "displays a flash message 'Please fill in all fields' when data entry is invalid" do
+      visit edit_merchant_item_path(@merchant1, @item1)
+  
+      fill_in("Name", with: "")
+      fill_in("Description", with: "")
+      fill_in("Unit price", with: "")
+      click_button('Submit')
+  
+      expect(current_path).to eq(edit_merchant_item_path(@merchant1, @item1))
+      expect(page).to have_text("Please fill in all fields")
+    end
   end
 end
