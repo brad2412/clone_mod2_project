@@ -1,0 +1,18 @@
+<h1>Invoice #<%= @invoice.id %></h1>
+
+<p>Status: <%= @invoice.status %></p>
+<p>Created on: <%= @invoice.formatted_date %></p>
+<p>Customer: <%= @invoice.customer.full_name %></p>
+
+
+<h3>Items on this order:</h3>
+<p>Total For This Invoice: <%= @invoice.formatted_revenue %></p>
+<% @invoice.invoice_items_for(@merchant).each do |invoice_item| %>
+  <div id="item-<%=invoice_item.id%>">
+    Item: <%= invoice_item.item.name %><br>
+    Quantity Ordered: <%= invoice_item.quantity %><br>
+    Sold at: <%= invoice_item.formatted_price %> per unit
+    Item Status: <%= invoice_item.status %>
+  </div>
+  <br>
+<% end %>
