@@ -13,7 +13,7 @@ RSpec.describe InvoiceItem, type: :model do
     it { should validate_presence_of :status }
   end
 
-  describe "#formatted_price" do
+  describe "#format_money" do #exists in application record
     it "returns the price formatted" do
       @merchant1 = Merchant.create!(name: "Dangerway", enabled: true)
 
@@ -31,10 +31,10 @@ RSpec.describe InvoiceItem, type: :model do
       @invoice_item3 = InvoiceItem.create!(invoice: @invoice1, item: @item3, quantity: 465, unit_price: 34568765, status: "shipped")
       @invoice_item4 = InvoiceItem.create!(invoice: @invoice1, item: @item4, quantity: 23, unit_price: 1509, status: "shipped")
 
-      expect(@invoice_item1.formatted_price).to eq("$34.76")
-      expect(@invoice_item2.formatted_price).to eq("$8.02")
-      expect(@invoice_item3.formatted_price).to eq("$345,687.65")
-      expect(@invoice_item4.formatted_price).to eq("$15.09")
+      expect(@invoice_item1.format_money(@invoice_item1.unit_price)).to eq("$34.76")
+      expect(@invoice_item2.format_money(@invoice_item2.unit_price)).to eq("$8.02")
+      expect(@invoice_item3.format_money(@invoice_item3.unit_price)).to eq("$345,687.65")
+      expect(@invoice_item4.format_money(@invoice_item4.unit_price)).to eq("$15.09")
     end
   end
 end

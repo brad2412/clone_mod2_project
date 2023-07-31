@@ -192,27 +192,27 @@ RSpec.describe "Admin Merchants Index Page" do
     within("#top_five") do
       within("#merchant-#{@merchant6.id}") do
         expect(page).to have_link("#{@merchant6.name}", href: admin_merchant_path(@merchant6))
-        expect(page).to have_content("Total Revenue: #{@merchant6.formatted_revenue}")
+        expect(page).to have_content("Total Revenue: #{@merchant6.format_money(@merchant6.total_revenue)}")
       end
 
       within("#merchant-#{@merchant2.id}") do
         expect(page).to have_link("#{@merchant2.name}", href: admin_merchant_path(@merchant2))
-        expect(page).to have_content("Total Revenue: #{@merchant2.formatted_revenue}")
+        expect(page).to have_content("Total Revenue: #{@merchant2.format_money(@merchant2.total_revenue)}")
       end
 
       within("#merchant-#{@merchant4.id}") do
         expect(page).to have_link("#{@merchant4.name}", href: admin_merchant_path(@merchant4))
-        expect(page).to have_content("Total Revenue: #{@merchant4.formatted_revenue}")
+        expect(page).to have_content("Total Revenue: #{@merchant4.format_money(@merchant4.total_revenue)}")
       end 
 
       within("#merchant-#{@merchant5.id}") do
         expect(page).to have_link("#{@merchant5.name}", href: admin_merchant_path(@merchant5))
-        expect(page).to have_content("Total Revenue: #{@merchant5.formatted_revenue}")
+        expect(page).to have_content("Total Revenue: #{@merchant5.format_money(@merchant5.total_revenue)}")
       end
       
       within("#merchant-#{@merchant7.id}") do
         expect(page).to have_link("#{@merchant7.name}", href: admin_merchant_path(@merchant7))
-        expect(page).to have_content("Total Revenue: #{@merchant7.formatted_revenue}")
+        expect(page).to have_content("Total Revenue: #{@merchant7.format_money(@merchant7.total_revenue)}")
       end
 
       expect(@merchant6.name).to appear_before(@merchant2.name)

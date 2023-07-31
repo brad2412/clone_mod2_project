@@ -42,51 +42,82 @@ RSpec.describe "Merchants Invoice Show Page" do
       expect(page).to have_content("Item: cheese")
       expect(page).to have_content("Quantity Ordered: 5")
       expect(page).to have_content("Sold at: $34.76 per unit")
-      expect(page).to have_content("Item Status: pending")
+      expect(page).to have_content("Status:")
     end
 
     within("#item-#{@item2.id}") do
       expect(page).to have_content("Item: bad cheese")
       expect(page).to have_content("Quantity Ordered: 4")
       expect(page).to have_content("Sold at: $8.02 per unit")
-      expect(page).to have_content("Item Status: packaged")
+      expect(page).to have_content("Status:")
     end
 
     within("#item-#{@item3.id}") do
       expect(page).to have_content("Item: Bacon")
       expect(page).to have_content("Quantity Ordered: 465")
       expect(page).to have_content("Sold at: $7.54 per unit")
-      expect(page).to have_content("Item Status: shipped")
+      expect(page).to have_content("Status:")
     end
 
     within("#item-#{@item4.id}") do
       expect(page).to have_content("Item: Chowda")
       expect(page).to have_content("Quantity Ordered: 23")
       expect(page).to have_content("Sold at: $15.09 per unit")
-      expect(page).to have_content("Item Status: shipped")
+      expect(page).to have_content("Status:")
     end
 
     expect(page).to_not have_content("Not Bacon")
   end
 
   # User Story 17
-  xit "" do
-    # As a merchant
-    # When I visit my merchant invoice show page (/merchants/:merchant_id/invoices/:invoice_id)
-    # Then I see the total revenue that will be generated from all of my items on the invoice
+  it "displays total revenue from THIS merchants items on THIS invoice" do
+    visit merchant_invoice_path(@merchant1, @invoice1)
+    
+    expect(page).to have_content("Total For This Invoice: $4,059.05")
   end
 
   # User Story 18
-  xit "" do
-    # As a merchant
-    # When I visit my merchant invoice show page (/merchants/:merchant_id/invoices/:invoice_id)
-    # I see that each invoice item status is a select field
-    # And I see that the invoice item's current status is selected
-    # When I click this select field,
-    # Then I can select a new status for the Item,
-    # And next to the select field I see a button to "Update Item Status"
-    # When I click this button
-    # I am taken back to the merchant invoice show page
-    # And I see that my Item's status has now been updated
+  it "shows the status of each item" do
+    visit merchant_invoice_path(@merchant1, @invoice1)
+  
+    within("#item-#{@item1.id}") do
+      expect(page).to have_content("Status:")
+      expect(page).to have_select(:status, with_options: ["shipped", "packaged", "pending"], selected: "pending")
+      expect(page).to have_button("Update Item Status")
+    end
+
+    within("#item-#{@item2.id}") do
+      expect(page).to have_content("Status:")
+      expect(page).to have_select(:status, with_options: ["shipped", "packaged", "pending"], selected: "packaged")
+      expect(page).to have_button("Update Item Status")
+    end
+
+    within("#item-#{@item3.id}") do
+      expect(page).to have_content("Status:")
+      expect(page).to have_select(:status, with_options: ["shipped", "packaged", "pending"], selected: "shipped")
+      expect(page).to have_button("Update Item Status")
+    end
+
+    within("#item-#{@item4.id}") do
+      expect(page).to have_content("Status:")
+      expect(page).to have_select(:status, with_options: ["shipped", "packaged", "pending"], selected: "shipped")
+      expect(page).to have_button("Update Item Status")
+    end
+  end
+
+  it "updates item status when you click to update status" do
+    visit merchant_invoice_path(@merchant1, @invoice1)
+
+    within("#item-#{@item1.id}") do
+      expect(page).to have_select(:status, selected: "pending")
+      select("packaged", from: "status")
+      click_button("Update Item Status")
+    end
+
+    expect(current_path).to eq(merchant_invoice_path(@merchant1, @invoice1))
+
+    within("#item-#{@item1.id}") do
+      expect(page).to have_select(:status, selected: "packaged")
+    end
   end
 end

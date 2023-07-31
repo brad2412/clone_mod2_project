@@ -10,12 +10,12 @@ Customer: <%= @invoice.customer.full_name %>
 
 
 <h3>Items on this order:</h3>
-<p>Total For This Invoice: <%= @invoice.formatted_revenue %></p>
+<p>Total For This Invoice: <%= @invoice.format_money(@invoice.total_revenue) %></p>
 <% @invoice.invoice_items.each do |invoice_item| %>
   <div id="item-<%=invoice_item.id%>">
     Item: <%= invoice_item.item.name %><br>
     Quantity Ordered: <%= invoice_item.quantity %><br>
-    Sold at: <%= invoice_item.formatted_price %> per unit
+    Sold at: <%= invoice_item.format_money(invoice_item.unit_price) %> per unit
     Item Status: <%= invoice_item.status %>
   </div>
   <br>
