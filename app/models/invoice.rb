@@ -3,7 +3,7 @@ class Invoice < ApplicationRecord
   # has_one :merchant, through: :items
   has_many :invoice_items
   has_many :transactions
-  has_many :items, through: :invoice_items
+  # has_many :items, through: :invoice_items
 
   validates :status, presence: true
 
@@ -21,7 +21,7 @@ class Invoice < ApplicationRecord
     invoice_items.sum('quantity*unit_price')
   end
 
-  def items_for(merchant)
-    items.where('merchant_id = ?', merchant.id)
+  def invoice_items_for(merchant)
+    invoice_items.joins(:item).where('merchant_id = ?', merchant.id)
   end
 end
