@@ -1,5 +1,6 @@
 <h1>Welcome <%= @merchant.name %></h1>
 <h1> Your Items </h1>
+<%= link_to "New Item", new_merchant_item_path(@merchant, @item) %>
 
 
 <div class="table-container">
