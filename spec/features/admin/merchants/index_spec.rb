@@ -146,20 +146,18 @@ RSpec.describe "Admin Merchants Index Page" do
   it "can enable or disable merchants" do
     visit admin_merchants_path
     # save_and_open_page
-    within(".table-container") do
-      within(".enabled") do
-        expect(page).to have_content("Enabled Merchants")
-        expect(page).to have_content("Dangerway")
-        expect(page).to have_content("Targete")
-        expect(page).to have_content("Fifteen Bears")
-        expect(page).to have_content("Queen Soopers")
-      end
-      
-      within(".disabled") do
-        expect(page).to have_content("Disabled Merchants")
-        expect(page).to have_content("Freddy Meyers")
-        expect(page).to have_content("Timmy Hortons")
-      end
+    within(".enabled") do
+      expect(page).to have_content("Enabled Merchants")
+      expect(page).to have_content("Dangerway")
+      expect(page).to have_content("Targete")
+      expect(page).to have_content("Fifteen Bears")
+      expect(page).to have_content("Queen Soopers")
+    end
+    
+    within(".disabled") do
+      expect(page).to have_content("Disabled Merchants")
+      expect(page).to have_content("Freddy Meyers")
+      expect(page).to have_content("Timmy Hortons")
     end
 
     within("tr#em-#{@merchant1.id}") do
