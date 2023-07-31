@@ -1,18 +1,27 @@
 class ApplicationRecord < ActiveRecord::Base
   primary_abstract_class
 
-  def formatted_price
-    price = unit_price/100.00
-    formatted_amount = sprintf("$%.2f", price)
-    if formatted_amount.length > 7
-      formatted_amount = formatted_amount.gsub!(/(\d)(?=(\d{3})+(?!\d))/, "\\1,")
-    end
-    formatted_amount
-  end
+  # def formatted_price
+  #   price = unit_price/100.00
+  #   formatted_amount = sprintf("$%.2f", price)
+  #   if formatted_amount.length > 7
+  #     formatted_amount = formatted_amount.gsub!(/(\d)(?=(\d{3})+(?!\d))/, "\\1,")
+  #   end
+  #   formatted_amount
+  # end
 
-  def formatted_revenue
-    revenue = total_revenue/100.00
-    formatted_amount = sprintf("$%.2f", revenue)
+  # def formatted_revenue
+  #   revenue = total_revenue/100.00
+  #   formatted_amount = sprintf("$%.2f", revenue)
+  #   if formatted_amount.length > 7
+  #     formatted_amount = formatted_amount.gsub!(/(\d)(?=(\d{3})+(?!\d))/, "\\1,")
+  #   end
+  #   formatted_amount
+  # end
+
+  def format_money(value)
+    amount = value/100.00
+    formatted_amount = sprintf("$%.2f", amount)
     if formatted_amount.length > 7
       formatted_amount = formatted_amount.gsub!(/(\d)(?=(\d{3})+(?!\d))/, "\\1,")
     end
