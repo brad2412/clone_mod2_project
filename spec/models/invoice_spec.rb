@@ -58,7 +58,7 @@ RSpec.describe Invoice, type: :model do
     date_array = full_date.split
     weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-    days = (1...31).to_a
+    days = (1..31).to_a
     expect(weekdays).to include(date_array[0])
     expect(months).to include(date_array[1])
     expect(days).to include(date_array[2].to_i)

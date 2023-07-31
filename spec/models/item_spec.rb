@@ -23,8 +23,8 @@ RSpec.describe Item, type: :model do
       @customer6 = Customer.create!(first_name: "Johnny", last_name: "Smith")
       @customer7 = Customer.create!(first_name: "Joseph", last_name: "Smith")
 
-      @item1 = Item.create!(name: "cheese", description: "its cheese.", unit_price: 1337, merchant_id: @merchant1.id)
-      @item2 = Item.create!(name: "golden eggs", description: "real gold yo.", unit_price: 38432112, merchant_id: @merchant1.id)
+      @item1 = Item.create!(name: "cheese", description: "its cheese.", unit_price: 1337, merchant_id: @merchant1.id, enabled: true)
+      @item2 = Item.create!(name: "golden eggs", description: "real gold yo.", unit_price: 38432112, merchant_id: @merchant1.id, enabled: false)
 
       @invoice1 = Invoice.create!(status: "completed", customer_id: @customer1.id)
       @invoice2 = Invoice.create!(status: "completed", customer_id: @customer2.id)
@@ -64,6 +64,19 @@ RSpec.describe Item, type: :model do
       expect(@item1.formatted_unit_price).to eq("$13.37")
       expect(@item2.formatted_unit_price).to eq("$384,321.12")
       expect(@item1.formatted_unit_price).to_not eq(1337)
+    end
+  end
+    
+  describe "#enabled" do
+    it "returns only enabled items" do
+      expect(@merchant1.items.enabled).to eq([@item1])
+    end
+  end
+  
+  describe "#disabled" do
+    it "returns only disabled items" do
+      expect(@merchant1.items.disabled).to eq([@item2])
+
     end
   end
 
