@@ -146,20 +146,18 @@ RSpec.describe "Admin Merchants Index Page" do
   it "can enable or disable merchants" do
     visit admin_merchants_path
     # save_and_open_page
-    within(".table-container") do
-      within(".enabled") do
-        expect(page).to have_content("Enabled Merchants")
-        expect(page).to have_content("Dangerway")
-        expect(page).to have_content("Targete")
-        expect(page).to have_content("Fifteen Bears")
-        expect(page).to have_content("Queen Soopers")
-      end
-      
-      within(".disabled") do
-        expect(page).to have_content("Disabled Merchants")
-        expect(page).to have_content("Freddy Meyers")
-        expect(page).to have_content("Timmy Hortons")
-      end
+    within(".enabled") do
+      expect(page).to have_content("Enabled Merchants")
+      expect(page).to have_content("Dangerway")
+      expect(page).to have_content("Targete")
+      expect(page).to have_content("Fifteen Bears")
+      expect(page).to have_content("Queen Soopers")
+    end
+    
+    within(".disabled") do
+      expect(page).to have_content("Disabled Merchants")
+      expect(page).to have_content("Freddy Meyers")
+      expect(page).to have_content("Timmy Hortons")
     end
 
     within("tr#em-#{@merchant1.id}") do
@@ -194,27 +192,27 @@ RSpec.describe "Admin Merchants Index Page" do
     within("#top_five") do
       within("#merchant-#{@merchant6.id}") do
         expect(page).to have_link("#{@merchant6.name}", href: admin_merchant_path(@merchant6))
-        expect(page).to have_content("Total Revenue: #{@merchant6.formatted_total_revenue}")
+        expect(page).to have_content("Total Revenue: #{@merchant6.formatted_revenue}")
       end
 
       within("#merchant-#{@merchant2.id}") do
         expect(page).to have_link("#{@merchant2.name}", href: admin_merchant_path(@merchant2))
-        expect(page).to have_content("Total Revenue: #{@merchant2.formatted_total_revenue}")
+        expect(page).to have_content("Total Revenue: #{@merchant2.formatted_revenue}")
       end
 
       within("#merchant-#{@merchant4.id}") do
         expect(page).to have_link("#{@merchant4.name}", href: admin_merchant_path(@merchant4))
-        expect(page).to have_content("Total Revenue: #{@merchant4.formatted_total_revenue}")
+        expect(page).to have_content("Total Revenue: #{@merchant4.formatted_revenue}")
       end 
 
       within("#merchant-#{@merchant5.id}") do
         expect(page).to have_link("#{@merchant5.name}", href: admin_merchant_path(@merchant5))
-        expect(page).to have_content("Total Revenue: #{@merchant5.formatted_total_revenue}")
+        expect(page).to have_content("Total Revenue: #{@merchant5.formatted_revenue}")
       end
       
       within("#merchant-#{@merchant7.id}") do
         expect(page).to have_link("#{@merchant7.name}", href: admin_merchant_path(@merchant7))
-        expect(page).to have_content("Total Revenue: #{@merchant7.formatted_total_revenue}")
+        expect(page).to have_content("Total Revenue: #{@merchant7.formatted_revenue}")
       end
 
       expect(@merchant6.name).to appear_before(@merchant2.name)

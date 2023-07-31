@@ -11,22 +11,22 @@ class Item < ApplicationRecord
   def all_invoices
     invoices.order(:created_at).distinct
   end
-
-  def formatted_unit_price
-    price = self.unit_price/100.to_f
-    formatted_price = sprintf("$%.2f", price)
-    if formatted_price.length > 7
-      formatted_price = formatted_price.gsub!(/(\d)(?=(\d{3})+(?!\d))/, "\\1,")
-    end
-      formatted_price
-  end
-
+  
   def self.enabled
     where(enabled: true)
   end
-
+  
   def self.disabled
     where(enabled: false)
   end
+  
+    # def formatted_unit_price  # this method is repeated in merchant, invoice, and invoice_item possible rename and move to application_record?
+    #   price = self.unit_price/100.00
+    #   formatted_price = sprintf("$%.2f", price)
+    #   if formatted_price.length > 7
+    #     formatted_price = formatted_price.gsub!(/(\d)(?=(\d{3})+(?!\d))/, "\\1,")
+    #   end
+    #     formatted_price
+    # end
 
 end

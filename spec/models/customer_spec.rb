@@ -4,6 +4,7 @@ RSpec.describe Customer, type: :model do
   describe "relationships" do
     it { should have_many :invoices}
     it { should have_many(:transactions).through(:invoices) }
+    # it { should have_many(:merchants).through(:invoices) }
   end
 
   describe "validations" do
@@ -90,7 +91,6 @@ RSpec.describe Customer, type: :model do
 
 
       top_customers = Customer.top_customers.map(&:id)
-      # binding.pry
       expect(top_customers.count).to eq(5)
       expect(top_customers).to eq([customer6.id, customer1.id, customer2.id, customer3.id, customer4.id])
     end

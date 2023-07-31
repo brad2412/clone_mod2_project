@@ -5,6 +5,7 @@ RSpec.describe Item, type: :model do
     it {should belong_to :merchant }
     it {should have_many :invoice_items }
     it {should have_many(:invoices).through(:invoice_items) }
+    it {should have_many(:transactions).through(:invoices) }
   end
 
   describe "validations" do
@@ -60,9 +61,9 @@ RSpec.describe Item, type: :model do
 
   describe "formatted unit price" do
     it "should return item price formatted in dollars and cents" do
-      expect(@item1.formatted_unit_price).to eq("$13.37")
-      expect(@item2.formatted_unit_price).to eq("$384,321.12")
-      expect(@item1.formatted_unit_price).to_not eq(1337)
+      expect(@item1.formatted_price).to eq("$13.37")
+      expect(@item2.formatted_price).to eq("$384,321.12")
+      expect(@item1.formatted_price).to_not eq(1337)
     end
   end
     
