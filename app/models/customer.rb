@@ -7,7 +7,6 @@ class Customer < ApplicationRecord
   validates :last_name, presence: true
   
   def self.top_customers
-    # binding.pry
     Customer.joins(:transactions)
     .where(transactions: { result: "success" })
     .group(:id)
