@@ -1,25 +1,15 @@
 class ApplicationRecord < ActiveRecord::Base
   primary_abstract_class
 
-  def formatted_price
-    price = unit_price/100.00
-    formatted_amount = sprintf("$%.2f", price)
-    if formatted_amount.length > 7
-      formatted_amount = formatted_amount.gsub!(/(\d)(?=(\d{3})+(?!\d))/, "\\1,")
-    end
-    formatted_amount
-  end
-
-  def formatted_revenue
-    revenue = total_revenue/100.00
-    formatted_amount = sprintf("$%.2f", revenue)
+  def format_money(value)
+    amount = value/100.00
+    formatted_amount = sprintf("$%.2f", amount)
     if formatted_amount.length > 7
       formatted_amount = formatted_amount.gsub!(/(\d)(?=(\d{3})+(?!\d))/, "\\1,")
     end
     formatted_amount
   end
 end
-
 
 # The regular expression uses a positive lookahead (?=\\d{3}+(?!\\d)) to match any digit \\d
 # that is followed by groups of three digits (\\d{3})+ and not followed by another digit (?!\\d).

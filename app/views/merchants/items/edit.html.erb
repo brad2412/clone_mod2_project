@@ -2,7 +2,7 @@
 
 <p>Name: <%= @item.name %></p>
 <p>Description: <%= @item.description %></p>
-<p>Current Selling Price: <%= @item.formatted_price %></p>
+<p>Current Selling Price: <%= @item.format_money(@item.unit_price) %></p>
 
 <%= form_with url: merchant_item_path(@merchant, @item), method: :patch, local: true do |f| %>
   <%= f.label :name %>
