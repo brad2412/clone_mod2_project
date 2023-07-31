@@ -5,7 +5,7 @@ RSpec.describe Invoice, type: :model do
     it { should belong_to :customer }
     it { should have_many :invoice_items }
     it { should have_many :transactions }
-    # it { should have_many(:items).through(:invoice_items) }
+    it { should have_many(:items).through(:invoice_items) }
   end
 
   describe "validations" do
@@ -19,8 +19,10 @@ RSpec.describe Invoice, type: :model do
     customer4 = Customer.create!(first_name: "Janet", last_name: "Smith")
     customer5 = Customer.create!(first_name: "Johnathan", last_name: "Smith")
     customer6 = Customer.create!(first_name: "Johnny", last_name: "Smith")
-    merchant1 = Merchant.create!(name: "Safeway")
-    item1 = Item.create!(name: "cheese", description: "its cheese.", unit_price: 1337, merchant_id: merchant1.id)
+    @merchant1 = Merchant.create!(name: "Safeway")
+    @merchant2 = Merchant.create!(name: "Floormart")
+    @item1 = Item.create!(name: "cheese", description: "its cheese.", unit_price: 1337, merchant_id: @merchant1.id)
+    item2 = Item.create!(name: "bad cheese", description: "its cheese.", unit_price: 1337, merchant_id: @merchant2.id)
     @invoice1 = Invoice.create!(status: "in progress", customer_id: customer1.id)
     @invoice2 = Invoice.create!(status: "in progress", customer_id: customer2.id)
     @invoice3 = Invoice.create!(status: "in progress", customer_id: customer3.id)
@@ -28,13 +30,14 @@ RSpec.describe Invoice, type: :model do
     @invoice5 = Invoice.create!(status: "completed", customer_id: customer5.id)
     @invoice6 = Invoice.create!(status: "completed", customer_id: customer6.id)
     @invoice7 = Invoice.create!(status: "completed", customer_id: customer6.id)
-    invoice_item1 = InvoiceItem.create!(item_id: item1.id, invoice_id: @invoice1.id, quantity: 5, unit_price: 13635, status: "packaged")
-    invoice_item2 = InvoiceItem.create!(item_id: item1.id, invoice_id: @invoice2.id, quantity: 9, unit_price: 23324, status: "packaged")
-    invoice_item3 = InvoiceItem.create!(item_id: item1.id, invoice_id: @invoice3.id, quantity: 9, unit_price: 23324, status: "pending")
-    invoice_item4 = InvoiceItem.create!(item_id: item1.id, invoice_id: @invoice4.id, quantity: 9, unit_price: 23324, status: "pending")
-    invoice_item5 = InvoiceItem.create!(item_id: item1.id, invoice_id: @invoice5.id, quantity: 9, unit_price: 23324, status: "shipped")
-    invoice_item6 = InvoiceItem.create!(item_id: item1.id, invoice_id: @invoice6.id, quantity: 9, unit_price: 23324, status: "shipped")
-    invoice_item7 = InvoiceItem.create!(item_id: item1.id, invoice_id: @invoice6.id, quantity: 9, unit_price: 23324, status: "shipped")
+    invoice_item1 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice1.id, quantity: 5, unit_price: 13635, status: "packaged")
+    invoice_item2 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice2.id, quantity: 9, unit_price: 23324, status: "packaged")
+    invoice_item3 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice3.id, quantity: 9, unit_price: 23324, status: "pending")
+    invoice_item4 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice4.id, quantity: 9, unit_price: 23324, status: "pending")
+    invoice_item5 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice5.id, quantity: 9, unit_price: 23324, status: "shipped")
+    invoice_item6 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice6.id, quantity: 9, unit_price: 23324, status: "shipped")
+    invoice_item7 = InvoiceItem.create!(item_id: @item1.id, invoice_id: @invoice6.id, quantity: 9, unit_price: 23324, status: "shipped")
+    invoice_item8 = InvoiceItem.create!(item_id: item2.id, invoice_id: @invoice1.id, quantity: 4, unit_price: 23324, status: "shipped")
     transaction1 = Transaction.create!(invoice_id: @invoice1.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: "failed")
     transaction2 = Transaction.create!(invoice_id: @invoice2.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: "success")
     transaction3 = Transaction.create!(invoice_id: @invoice3.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: "success")
@@ -66,14 +69,18 @@ RSpec.describe Invoice, type: :model do
   end
 
   it "calculates total revenue for all items" do
-    expect(@invoice1.total_revenue).to eq(68175)
+    expect(@invoice1.total_revenue).to eq(161471)
     expect(@invoice2.total_revenue).to eq(209916)
     expect(@invoice6.total_revenue).to eq(419832)
   end
 
   it "formats the revenue" do
-    expect(@invoice1.formatted_revenue).to eq("$681.75")
+    expect(@invoice1.formatted_revenue).to eq("$1,614.71")
     expect(@invoice2.formatted_revenue).to eq("$2,099.16")
     expect(@invoice6.formatted_revenue).to eq("$4,198.32")
+  end
+
+  it "can filter items by merchant" do
+    expect(@invoice1.items_for(@merchant1)).to eq([@item1])
   end
 end
