@@ -153,13 +153,13 @@ RSpec.describe Merchant, type: :model do
   end
 
   it "returns formatted total revenue" do
-    expect(@merchant1.formatted_total_revenue).to eq("$14,776.20")
-    expect(@merchant2.formatted_total_revenue).to eq("$1,658.26")
-    expect(@merchant3.formatted_total_revenue).to eq("$64.53")
-    expect(@merchant4.formatted_total_revenue).to eq("$543.88")
-    expect(@merchant5.formatted_total_revenue).to eq("$367.24")
-    expect(@merchant6.formatted_total_revenue).to eq("$4,348.36")
-    expect(@merchant7.formatted_total_revenue).to eq("$130.16")
+    expect(@merchant1.formatted_revenue).to eq("$14,776.20")
+    expect(@merchant2.formatted_revenue).to eq("$1,658.26")
+    expect(@merchant3.formatted_revenue).to eq("$64.53")
+    expect(@merchant4.formatted_revenue).to eq("$543.88")
+    expect(@merchant5.formatted_revenue).to eq("$367.24")
+    expect(@merchant6.formatted_revenue).to eq("$4,348.36")
+    expect(@merchant7.formatted_revenue).to eq("$130.16")
   end
 
   it "returns top 5 merchants by total revenue generated" do
