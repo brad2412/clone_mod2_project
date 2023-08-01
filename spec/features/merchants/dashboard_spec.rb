@@ -92,9 +92,9 @@ RSpec.describe "merchant dashboard", type: :feature do
     describe "items_ready_to_ship" do
       it "should show item names that have been ordered but not shipped with invoice id" do
         visit merchant_path(@merchant1)
-        # save_and_open_page
+
         expect(page).to have_content("Items Ready To Ship")
-        # save_and_open_page
+
         within '#items_ready_to_ship' do
           expect(page).to have_content("Item Name: #{@item1.name}")
           expect(page).to have_content("Item Name: #{@item3.name}")
@@ -107,20 +107,9 @@ RSpec.describe "merchant dashboard", type: :feature do
           click_link("#{@invoice2.id}")
 
           expect(current_path).to eq("/merchants/#{@merchant1.id}/invoices/#{@invoice2.id}")
-          
         end
-
       end
     end
   end
 end
-
-# 5. Merchant Dashboard Invoices sorted by least recent
-
-# As a merchant
-# When I visit my merchant dashboard (/merchants/:merchant_id/dashboard)
-# In the section for "Items Ready to Ship",
-# Next to each Item name I see the date that the invoice was created
-# And I see the date formatted like "Monday, July 18, 2019"
-# And I see that the list is ordered from oldest to newest
 
