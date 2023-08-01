@@ -71,10 +71,10 @@ RSpec.describe "Admin Dashboard Page" do
     expect(page).to have_content("Incomplete Invoices")
 
     
-    expect(page).to have_link("Invoice ##{@invoice1.id}", href: admin_invoices_path(@invoice1))
-    expect(page).to have_link("Invoice ##{@invoice2.id}", href: admin_invoices_path(@invoice2))
-    expect(page).to have_link("Invoice ##{@invoice3.id}", href: admin_invoices_path(@invoice3))
-    expect(page).to have_link("Invoice ##{@invoice4.id}", href: admin_invoices_path(@invoice4))
+    expect(page).to have_link("Invoice ##{@invoice1.id}", href: admin_invoice_path(@invoice1))
+    expect(page).to have_link("Invoice ##{@invoice2.id}", href: admin_invoice_path(@invoice2))
+    expect(page).to have_link("Invoice ##{@invoice3.id}", href: admin_invoice_path(@invoice3))
+    expect(page).to have_link("Invoice ##{@invoice4.id}", href: admin_invoice_path(@invoice4))
     
 
     expect(page).to_not have_content("Invoice #{@invoice5.id}")
