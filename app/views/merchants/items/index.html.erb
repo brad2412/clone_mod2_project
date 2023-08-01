@@ -1,7 +1,16 @@
+<%= link_to "New Item", new_merchant_item_path(@merchant, @item) %>
 <h1>Welcome <%= @merchant.name %></h1>
 <h1> Your Items </h1>
-<%= link_to "New Item", new_merchant_item_path(@merchant, @item) %>
 
+<div id="top_five_items">
+  <h2>Top Five Items By Total Revenue</h2>
+  <% @items.top_5_items_by_total_revenue.each do |item| %>
+    <section id="item-<%= item.id %>">
+      <%= link_to item.name, merchant_item_path(@merchant, item) %> - Total Revenue: <%= item.format_money(item.revenue) %>
+      <p>Top selling date for <%= item.name %> was <%= item.best_item_day %></p>
+    </section>
+  <% end %>
+</div>
 
 <div class="table-container">
   <table class="enabled">
