@@ -1,7 +1,7 @@
 class ApplicationRecord < ActiveRecord::Base
   primary_abstract_class
 
-  def format_money(*attributes) #may be one method, or a method + argument
+  def format_money(*attributes)
     amount = self.send(*attributes)/100.to_f
 
     formatted_amount = sprintf("$%.2f", amount)
