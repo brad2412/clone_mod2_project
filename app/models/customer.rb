@@ -7,16 +7,22 @@ class Customer < ApplicationRecord
   validates :last_name, presence: true
   
   def self.top_customers
+    # Customer.joins(:transactions)
+    # .where(transactions: { result: "success" })
+    # .group(:id)
+    # .order("COUNT(transactions.id) DESC")
+    # .limit(5)
     Customer.joins(:transactions)
     .where(transactions: { result: "success" })
     .group(:id)
-    .order("COUNT(transactions.id) DESC")
+    .select('customers.*, COUNT(transactions.id) AS total_transactions')
+    .order("total_transactions DESC")
     .limit(5)
   end
   
-  def total_transactions
-    transactions.where( result: "success").count
-  end
+  # def total_transactions
+  #   transactions.where( result: "success").count
+  # end
 
   def full_name
     first_name + " " + last_name
