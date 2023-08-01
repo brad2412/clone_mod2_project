@@ -11,6 +11,8 @@
   </head>
 
   <body>
+
+    <img src="<% Picture.generate(logo_pic).source %>">
     <% flash.each do |type, msg| %>
     <div>
       <%= msg %>
