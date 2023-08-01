@@ -61,9 +61,9 @@ RSpec.describe Item, type: :model do
 
   describe "formatted unit price" do
     it "should return item price formatted in dollars and cents" do
-      expect(@item1.format_money(@item1.unit_price)).to eq("$13.37")
-      expect(@item2.format_money(@item2.unit_price)).to eq("$384,321.12")
-      expect(@item1.format_money(@item1.unit_price)).to_not eq(1337)
+      expect(@item1.format_money(:unit_price)).to eq("$13.37")
+      expect(@item2.format_money(:unit_price)).to eq("$384,321.12")
+      expect(@item1.format_money(:unit_price)).to_not eq(1337)
     end
   end
     
