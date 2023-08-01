@@ -1,8 +1,9 @@
 class ApplicationRecord < ActiveRecord::Base
   primary_abstract_class
 
-  def format_money(value)
-    amount = value/100.00
+  def format_money(*attributes)
+    amount = self.send(*attributes)/100.to_f
+
     formatted_amount = sprintf("$%.2f", amount)
     if formatted_amount.length > 7
       formatted_amount = formatted_amount.gsub!(/(\d)(?=(\d{3})+(?!\d))/, "\\1,")

@@ -75,9 +75,9 @@ RSpec.describe Invoice, type: :model do
   end
 
   it "formats the revenue" do
-    expect(@invoice1.format_money(@invoice1.total_revenue)).to eq("$1,614.71")
-    expect(@invoice2.format_money(@invoice2.total_revenue)).to eq("$2,099.16")
-    expect(@invoice6.format_money(@invoice6.total_revenue)).to eq("$4,198.32")
+    expect(@invoice1.format_money(:total_revenue)).to eq("$1,614.71")
+    expect(@invoice2.format_money(:total_revenue)).to eq("$2,099.16")
+    expect(@invoice6.format_money(:total_revenue)).to eq("$4,198.32")
   end
 
   it "can filter invoice items by merchant" do
