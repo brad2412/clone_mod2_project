@@ -116,7 +116,7 @@ Group DTR: [DTR](https://docs.google.com/document/d/1rITzHzPoXYcNLyEDX3FQwvB98Ab
 
 ### Christopher Cullinane
 - [Github](https://github.com/topher-nullset)
--[LinkedIn](https://www.linkedin.com/in/chris-cullinane-be/)
+- [LinkedIn](https://www.linkedin.com/in/chris-cullinane-be/)
 
 ### Paul Bennett
 - [Github](https://github.com/pcbennett108)
