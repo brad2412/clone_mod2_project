@@ -8,6 +8,7 @@ class Merchants::ItemsController < ApplicationController
   def show
     @merchant = Merchant.find(params[:merchant_id])
     @item = @merchant.items.find(params[:id])
+    @item_image = UnsplashService.new.item_image(@item.name)
   end
 
   def edit
