@@ -36,7 +36,7 @@ RSpec.describe Customer, type: :model do
       invoice_item5 = InvoiceItem.create!(item_id: item1.id, invoice_id: invoice5.id, quantity: 9, unit_price: 23324, status: "pending")
       invoice_item6 = InvoiceItem.create!(item_id: item1.id, invoice_id: invoice6.id, quantity: 9, unit_price: 23324, status: "pending")
       invoice_item7 = InvoiceItem.create!(item_id: item1.id, invoice_id: invoice6.id, quantity: 9, unit_price: 23324, status: "pending")
-      transaction1 = Transaction.create!(invoice_id: invoice1.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: "success")
+      transaction1 = Transaction.create!(invoice_id: invoice1.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: "failed")
       transaction2 = Transaction.create!(invoice_id: invoice2.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: "success")
       transaction3 = Transaction.create!(invoice_id: invoice3.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: "success")
       transaction4 = Transaction.create!(invoice_id: invoice4.id, credit_card_number: "1234567890987654", credit_card_expiration_date: "04/27", result: "success")
@@ -47,7 +47,8 @@ RSpec.describe Customer, type: :model do
 
       top_customers = Customer.top_customers.map(&:id)
       expect(top_customers.count).to eq(5)
-      expect(top_customers).to eq([customer6.id, customer1.id, customer2.id, customer3.id, customer4.id])
+      expect(top_customers).to eq([customer6.id, customer2.id, customer3.id, customer4.id, customer5.id])
+      expect(top_customers).to_not include(customer1.id)
     end
   end
 
