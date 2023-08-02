@@ -22,6 +22,7 @@ RSpec.describe "items show page", type: :feature do
       expect(page).to_not have_content("Name: #{@item2.name}") 
     end
 
+    # User Story 38
     it "should have a link to update an item's information" do
       visit merchant_item_path(@merchant1, @item1)
 
