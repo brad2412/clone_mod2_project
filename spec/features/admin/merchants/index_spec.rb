@@ -92,7 +92,7 @@ RSpec.describe "Admin Merchants Index Page" do
   # User Story 24
   it "shows the name of each merchant in the system" do
     visit admin_merchants_path
-    # save_and_open_page
+
     expect(page).to have_content("Merchants")
     expect(page).to have_link("Dangerway", href: admin_merchant_path(@merchant1))
     expect(page).to have_link("Targete", href: admin_merchant_path(@merchant2))
@@ -105,6 +105,7 @@ RSpec.describe "Admin Merchants Index Page" do
   # User story 27
   it "has buttons to disable or enable each merchant" do
     visit admin_merchants_path
+
     within("tr#em-#{@merchant1.id}") do
       expect(page).to have_content("Enabled")
       expect(page).to_not have_content("Disabled")
@@ -145,7 +146,7 @@ RSpec.describe "Admin Merchants Index Page" do
   # User story 27 continued/story 28
   it "can enable or disable merchants" do
     visit admin_merchants_path
-    # save_and_open_page
+
     within(".enabled") do
       expect(page).to have_content("Enabled Merchants")
       expect(page).to have_content("Dangerway")
@@ -167,7 +168,7 @@ RSpec.describe "Admin Merchants Index Page" do
     within("tr#dm-#{@merchant5.id}") do
       click_button("Enable Merchant")
     end
-    # save_and_open_page
+
     within(".enabled") do
       expect(page).to_not have_content("Dangerway")
       expect(page).to have_content("Targete")
@@ -183,7 +184,7 @@ RSpec.describe "Admin Merchants Index Page" do
     end
   end
 
-  #User story 30
+  # User story 30
   it "has a section for top five merchants by total revenue" do
     visit admin_merchants_path
     
@@ -222,7 +223,7 @@ RSpec.describe "Admin Merchants Index Page" do
     end
   end
 
-  #User story 31
+  # User story 31
   it "lists the most profitable date for each of top five merchants" do
     visit admin_merchants_path
     

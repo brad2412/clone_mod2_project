@@ -92,9 +92,9 @@ RSpec.describe "merchant dashboard", type: :feature do
     describe "items_ready_to_ship" do
       it "should show item names that have been ordered but not shipped with invoice id" do
         visit merchant_path(@merchant1)
-        # save_and_open_page
+
         expect(page).to have_content("Items Ready To Ship")
-        # save_and_open_page
+
         within '#items_ready_to_ship' do
           expect(page).to have_content("Item Name: #{@item1.name}")
           expect(page).to have_content("Item Name: #{@item3.name}")
@@ -107,12 +107,11 @@ RSpec.describe "merchant dashboard", type: :feature do
           click_link("#{@invoice2.id}")
 
           expect(current_path).to eq("/merchants/#{@merchant1.id}/invoices/#{@invoice2.id}")
-          
         end
-
       end
     end
   end
+
 
   # User stories 37 and 40
   it "has the logo and likes" do
@@ -132,5 +131,3 @@ RSpec.describe "merchant dashboard", type: :feature do
     expect(page.find("#merchant-image")["src"]).to include(image_src)
   end
 end
-
-

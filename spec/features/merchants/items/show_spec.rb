@@ -39,15 +39,3 @@ RSpec.describe "items show page", type: :feature do
     expect(page.find("#item-image")["src"]).to include(image_src)
   end
 end
-
-# 8. Merchant Item Update
-
-# As a merchant,
-# When I visit the merchant show page of an item (/merchants/:merchant_id/items/:item_id)
-# I see a link to update the item information.
-# When I click the link
-# Then I am taken to a page to edit this item
-# And I see a form filled in with the existing item attribute information
-# When I update the information in the form and I click ‘submit’
-# Then I am redirected back to the item show page where I see the updated information
-# And I see a flash message stating that the information has been successfully updated.

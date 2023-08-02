@@ -1,18 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Admin Dashboard Page" do
-  # customers = 5.times {FactoryBot.build(:customer)}
-  # let!(:customers) {create_list(:customer, 6) }
-  # let!(:merchants) {create_list(:merchant, 7)}
-  # # let!(:items) {create_list(:item, 20)}
-  # # let!(:invoice) {create(:invoice)}
-  # # let!(:invoice_item) {create(:invoice_item)}
-  # # let!(:transaction) {create(:transaction)}
-  # Rake::Task['db:seed'].invoke
   before(:each) do
-    # customer =  create(:customer)
     customer1 = Customer.create!(first_name: "Bob", last_name: "Smith")
-    # invoices =  create_list(:invoice, 3, customer: customer1)
     customer2 = Customer.create!(first_name: "Jane", last_name: "Smith")
     customer3 = Customer.create!(first_name: "John", last_name: "Smith")
     customer4 = Customer.create!(first_name: "Janet", last_name: "Smith")
@@ -46,7 +36,7 @@ RSpec.describe "Admin Dashboard Page" do
   # User Story 19
   it "shows I am on the admin dashboard page" do
     visit admin_path
-    # save_and_open_page
+
     expect(page).to have_content("Welcome to the Admin Dashboard")
   end
 
@@ -60,7 +50,7 @@ RSpec.describe "Admin Dashboard Page" do
   # User Story 21
   it "shows Top Customers statistics" do
     visit admin_path
-    # save_and_open_page
+
     expect(page).to have_content("Top Customers")
     expect(page).to have_content("Jane Smith: 1 transaction")
     expect(page).to have_content("John Smith: 1 transaction")
@@ -81,10 +71,10 @@ RSpec.describe "Admin Dashboard Page" do
     expect(page).to have_content("Incomplete Invoices")
 
     
-    expect(page).to have_link("Invoice ##{@invoice1.id}", href: admin_invoices_path(@invoice1))
-    expect(page).to have_link("Invoice ##{@invoice2.id}", href: admin_invoices_path(@invoice2))
-    expect(page).to have_link("Invoice ##{@invoice3.id}", href: admin_invoices_path(@invoice3))
-    expect(page).to have_link("Invoice ##{@invoice4.id}", href: admin_invoices_path(@invoice4))
+    expect(page).to have_link("Invoice ##{@invoice1.id}", href: admin_invoice_path(@invoice1))
+    expect(page).to have_link("Invoice ##{@invoice2.id}", href: admin_invoice_path(@invoice2))
+    expect(page).to have_link("Invoice ##{@invoice3.id}", href: admin_invoice_path(@invoice3))
+    expect(page).to have_link("Invoice ##{@invoice4.id}", href: admin_invoice_path(@invoice4))
     
 
     expect(page).to_not have_content("Invoice #{@invoice5.id}")
