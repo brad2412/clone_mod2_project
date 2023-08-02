@@ -6,7 +6,7 @@ class UnsplashService
 
   def item_image(keyword)
     response = connection.get("/photos?order_by&query=#{keyword}")
-    first_photo = (JSON.parse(response.body)).first
+    first_photo = (JSON.parse(response.body)).sample
     Photo.new(first_photo)
   end
 
