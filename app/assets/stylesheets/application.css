@@ -13,3 +13,71 @@
  *= require_tree .
  *= require_self
  */
+
+/* Style for the container that holds both tables */
+.table-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.form-container {
+  text-align: center;
+}
+
+/* Add margin to each element inside the form-container */
+.form-container > * {
+  margin-bottom: 20px;
+}
+
+/* Style for each table */
+table {
+  width: 45%; /* Adjust the width as needed */
+}
+
+th, td {
+  padding: 4px;
+  text-align: left;
+}
+
+/* Style for the "Enabled Merchants" section header */
+caption.ena {
+  color: rgb(1, 150, 36);
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+/* Style for the "Disabled Merchants" section header */
+caption.dis {
+  color: rgb(234, 10, 10);
+  font-size: 1.2rem;
+  margin-bottom: 8px
+}
+
+/* Style for the header */
+h1, h2 {
+  text-align: center;
+}
+
+#top_five {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.invoices-container {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr); /* Creates 10 equal-width columns */
+  grid-gap: 4px; /* Adjust the gap between columns as needed */
+}
+
+/* Optional: Adjust the width of each link to fit within the columns */
+.invoice-item {
+  grid-column: span 1; /* Each item spans 1 column */
+  width: 100%; /* Make each link take the full width of the column */
+  box-sizing: border-box; /* Include padding and border within the width */
+}
+
+.links-container {
+  text-align: center;
+  justify-content: space-between;
+}

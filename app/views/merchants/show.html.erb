@@ -1,4 +1,5 @@
 <h1>Welcome <%= @merchant.name %></h1>
+<img id="merchant-image" src=<%= @merchant_image.urls["thumb"] %>>
 <p><%= link_to "My Items", merchant_items_path(@merchant) %></p>
 <p><%= link_to "My Invoices", merchant_invoices_path(@merchant) %></p>
 
