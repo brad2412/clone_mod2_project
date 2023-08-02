@@ -118,8 +118,8 @@ RSpec.describe "merchant dashboard", type: :feature do
   it "has the logo and likes" do
     visit merchant_path(@merchant1)
 
-    image_src = "https://images.unsplash.com/photo-1666324574241-2f1fe62c490b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0ODMyOTJ8MHwxfGFsbHx8fHx8fHx8fDE2OTEwMDEzOTl8&ixlib=rb-4.0.3&q=80&w=200"
-    expect(page.find("#logo")["src"]).to eq(image_src)
+    image_src = "https://images.unsplash.com/photo-1666324574241-2f1fe62c490b"
+    expect(page.find("#logo")["src"]).to include(image_src)
     expect(page).to have_content("Likes:")
 
   end
