@@ -30,6 +30,13 @@ RSpec.describe "items show page", type: :feature do
       expect(current_path).to eq(edit_merchant_item_path(@merchant1, @item1))
     end
   end
+
+  it "has a picture based on items name" do
+    visit merchant_item_path(@merchant1, @item1)
+
+    image_src = "https://images.unsplash.com/photo"
+    expect(page.find("#item-image")["src"]).to include(image_src)
+  end
 end
 
 # 8. Merchant Item Update
