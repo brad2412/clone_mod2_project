@@ -113,14 +113,16 @@ RSpec.describe "merchant dashboard", type: :feature do
       end
     end
   end
+
+  # User stories 37 and 40
+  it "has the logo and likes" do
+    visit merchant_path(@merchant1)
+
+    image_src = "https://images.unsplash.com/photo-1666324574241-2f1fe62c490b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0ODMyOTJ8MHwxfGFsbHx8fHx8fHx8fDE2OTA5NDcxODl8&ixlib=rb-4.0.3&q=80&w=200"
+    expect(page.find("#logo")["src"]).to eq(image_src)
+    expect(page).to have_content("Likes:")
+
+  end
 end
 
-# 5. Merchant Dashboard Invoices sorted by least recent
-
-# As a merchant
-# When I visit my merchant dashboard (/merchants/:merchant_id/dashboard)
-# In the section for "Items Ready to Ship",
-# Next to each Item name I see the date that the invoice was created
-# And I see the date formatted like "Monday, July 18, 2019"
-# And I see that the list is ordered from oldest to newest
 
