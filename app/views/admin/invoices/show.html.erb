@@ -1,22 +1,4 @@
-<h1>Invoice #<%= @invoice.id %></h1>
-
-<%= form_with url: admin_invoice_path(@invoice), method: :patch, local: true do |f| %>
-  <%= f.label :status %>
-  <%= f.select :status, ["in progress", "cancelled", "completed"], selected: @invoice.status %>
-  <%= f.submit "Update Invoice Status" %><br>
-<% end %>
-Created on: <%= @invoice.formatted_date %><br>
-Customer: <%= @invoice.customer.full_name %>
-
-
-<h3>Items on this order:</h3>
-<p>Total For This Invoice: <%= @invoice.format_money(:total_revenue) %></p>
-<% @invoice.invoice_items.each do |invoice_item| %>
-  <div id="item-<%=invoice_item.id%>">
-    Item: <%= invoice_item.item.name %><br>
-    Quantity Ordered: <%= invoice_item.quantity %><br>
-    Sold at: <%= invoice_item.format_money(:unit_price) %> per unit
-    Item Status: <%= invoice_item.status %>
-  </div>
-  <br>
-<% end %>
+<%= render partial: "partials/invoices", locals: {
+  revenue: @invoice.format_money(:total_revenue),
+  invoice_items: @invoice.invoice_items
+}%>
