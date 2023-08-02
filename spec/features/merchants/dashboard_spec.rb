@@ -111,5 +111,23 @@ RSpec.describe "merchant dashboard", type: :feature do
       end
     end
   end
-end
 
+
+  # User stories 37 and 40
+  it "has the logo and likes" do
+    visit merchant_path(@merchant1)
+
+    image_src = "https://images.unsplash.com/photo-1666324574241-2f1fe62c490b"
+    expect(page.find("#logo")["src"]).to include(image_src)
+    expect(page).to have_content("Likes:")
+
+  end
+
+  # User Story 39
+  it "has a picture based on items name" do
+    visit merchant_path(@merchant1)
+
+    image_src = "https://images.unsplash.com/photo"
+    expect(page.find("#merchant-image")["src"]).to include(image_src)
+  end
+end

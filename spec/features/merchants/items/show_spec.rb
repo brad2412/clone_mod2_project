@@ -22,6 +22,7 @@ RSpec.describe "items show page", type: :feature do
       expect(page).to_not have_content("Name: #{@item2.name}") 
     end
 
+    # User Story 38
     it "should have a link to update an item's information" do
       visit merchant_item_path(@merchant1, @item1)
 
@@ -29,5 +30,12 @@ RSpec.describe "items show page", type: :feature do
       click_link"Update Item"
       expect(current_path).to eq(edit_merchant_item_path(@merchant1, @item1))
     end
+  end
+
+  it "has a picture based on items name" do
+    visit merchant_item_path(@merchant1, @item1)
+
+    image_src = "https://images.unsplash.com/photo"
+    expect(page.find("#item-image")["src"]).to include(image_src)
   end
 end
