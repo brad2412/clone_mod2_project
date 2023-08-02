@@ -11,6 +11,7 @@
   </head>
 
   <body>
+    <img id="logo" src=<%= @logo.urls["thumb"] %>><b>Likes:</b><%= @logo.likes %><br>
     <% flash.each do |type, msg| %>
     <div>
       <%= msg %>

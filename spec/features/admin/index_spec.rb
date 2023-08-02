@@ -118,4 +118,14 @@ RSpec.describe "Admin Dashboard Page" do
     expect("Invoice ##{@invoice3.id}").to appear_before("Invoice ##{@invoice2.id}")
     expect("Invoice ##{@invoice2.id}").to appear_before("Invoice ##{@invoice1.id}")
   end
+
+  # User stories 37 and 40
+  it "has the logo and likes" do
+    visit admin_path
+
+    image_src = "https://images.unsplash.com/photo-1666324574241-2f1fe62c490b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0ODMyOTJ8MHwxfGFsbHx8fHx8fHx8fDE2OTA5NDcxODl8&ixlib=rb-4.0.3&q=80&w=200"
+    expect(page.find("#logo")["src"]).to eq(image_src)
+    expect(page).to have_content("Likes:")
+
+  end
 end
