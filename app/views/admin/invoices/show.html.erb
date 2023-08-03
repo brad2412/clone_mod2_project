@@ -1,0 +1,4 @@
+<%= render partial: "partials/invoices", locals: {
+  revenue: @invoice.format_money(:total_revenue),
+  invoice_items: @invoice.invoice_items
+}%>

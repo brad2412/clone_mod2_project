@@ -1,0 +1,59 @@
+<%= link_to "Create New Merchant", new_admin_merchant_path %>
+<h1>Merchants</h1>
+
+<h2>Top Five Merchants By Total Revenue</h2>
+<div id="top_five">
+  <% Merchant.top_5_by_total_revenue.each do |merchant| %>
+    <section id="merchant-<%= merchant.id %>">
+      <%= link_to merchant.name, admin_merchant_path(merchant) %> - Total Revenue: <%= merchant.format_money(:total_revenue) %>
+      <p>Top selling date for <%= merchant.name %> was <%= merchant.best_day %></p>
+    </section>
+  <% end %>
+</div>
+
+
+<div class="table-container">
+  <table class="enabled">
+    <caption class="ena">Enabled Merchants</caption>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @merchants.enabled.each do |merchant| %>
+        <tr id="em-<%= merchant.id %>">
+          <td><%= link_to merchant.name, admin_merchant_path(merchant) %></td>
+          <td>Enabled</td>
+          <td>
+            <%= button_to "Disable Merchant", admin_merchant_path(merchant), method: :patch, params: { enabled: false } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <table class="disabled">
+    <caption class="dis">Disabled Merchants</caption>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @merchants.disabled.each do |merchant| %>
+        <tr id="dm-<%= merchant.id %>">
+          <td><%= link_to merchant.name, admin_merchant_path(merchant) %></td>
+          <td>Disabled</td>
+          <td>
+            <%= button_to "Enable Merchant", admin_merchant_path(merchant), method: :patch, params: { enabled: true } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

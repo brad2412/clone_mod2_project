@@ -6,6 +6,7 @@
 
 # Ignore bundler config.
 /.bundle
+/.env
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -32,3 +33,5 @@
 coverage
 
 .DS_Store
+
+/env.yml

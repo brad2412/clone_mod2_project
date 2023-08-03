@@ -1,0 +1,9 @@
+<h1>Item Details</h1>
+
+<p><%= @merchant.name %></p>
+
+<p>Name: <%= @item.name %></p>
+<p>Description: <%= @item.description %></p>
+<p>Current Selling Price: <%= @item.format_money(:unit_price) %></p>
+<p><%= link_to "Update Item", edit_merchant_item_path(@merchant, @item) %></p>
+<img id="item-image" src=<%= @item_image.urls["thumb"] %>>
