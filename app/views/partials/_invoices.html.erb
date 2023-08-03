@@ -1,0 +1,30 @@
+<h1>Invoice #<%= @invoice.id %></h1>
+
+<%= render partial: "partials/status", locals: {
+  path: admin_invoice_path(@invoice),
+  options: ["in progress", "cancelled", "completed"],
+  object: @invoice,
+  button_text: "Update Invoice Status"
+} if @merchant.nil? %>
+<%= "Status: #{@invoice.status}" unless @merchant.nil? %>
+Created on: <%= @invoice.formatted_date %><br>
+Customer: <%= @invoice.customer.full_name %>
+
+
+<h3>Items on this order:</h3>
+<p>Total For This Invoice: <%= revenue %></p>
+<% invoice_items.each do |invoice_item| %>
+  <div id="item-<%=invoice_item.id%>">
+    Item: <%= invoice_item.item.name %><br>
+    Quantity Ordered: <%= invoice_item.quantity %><br>
+    Sold at: <%= invoice_item.format_money(:unit_price) %> per unit
+    <%= render partial: "partials/status", locals: {
+  path: merchant_invoice_item_path(@merchant, invoice_item),
+  options: ["pending", "shipped", "packaged"],
+  object: invoice_item,
+  button_text: "Update Item Status"
+} unless @merchant.nil? %>
+    <%= "Item Status: #{invoice_item.status}" if @merchant.nil? %>
+  </div>
+  <br>
+<% end %>

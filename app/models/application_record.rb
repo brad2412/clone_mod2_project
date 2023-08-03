@@ -12,7 +12,7 @@ class ApplicationRecord < ActiveRecord::Base
   end
 end
 
-# The regular expression uses a positive lookahead (?=\\d{3}+(?!\\d)) to match any digit \\d
-# that is followed by groups of three digits (\\d{3})+ and not followed by another digit (?!\\d).
+# The regular expression uses a positive lookahead (?=\\d{3}+(?!\d)) to match any digit \d
+# that is followed by groups of three digits (\d{3})+ and not followed by another digit (?!\d).
 # This allows the regex to match the locations where commas should be inserted to separate thousands.
 # The replacement "\\1," places a comma after the matched digit \\1, effectively adding the comma as the thousands separator.

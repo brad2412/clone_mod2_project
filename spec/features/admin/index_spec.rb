@@ -109,11 +109,21 @@ RSpec.describe "Admin Dashboard Page" do
     expect("Invoice ##{@invoice2.id}").to appear_before("Invoice ##{@invoice1.id}")
   end
 
+
   it "has the logo at top of page" do
     visit admin_path
     
     expect(page.find("#logo")["src"]).to have_content("something.png")
     #  might be :src ?
     # could potentially also use [:alt] to check alt text of that image to eq(alt text)
+
+  # User stories 37 and 40
+  it "has the logo and likes" do
+    visit admin_path
+
+    image_src = "https://images.unsplash.com/photo-1666324574241-2f1fe62c490b"
+    expect(page.find("#logo")["src"]).to include(image_src)
+    expect(page).to have_content("Likes:")
+
   end
 end

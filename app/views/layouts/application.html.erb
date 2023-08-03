@@ -12,7 +12,11 @@
 
   <body>
 
+
     <img src="<% Picture.generate(logo_pic).source %>">
+
+    <img id="logo" src=<%= @logo.urls["thumb"] %>><b>Likes:</b><%= @logo.likes %><br>
+
     <% flash.each do |type, msg| %>
     <div>
       <%= msg %>
